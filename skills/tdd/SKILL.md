@@ -7,7 +7,12 @@ description: Test-Driven Development workflow. Use for ALL code changes - featur
 
 TDD is the fundamental practice. Every line of production code must be written in response to a failing test.
 
-**For how to write good tests**, load the `testing` skill. This skill focuses on the TDD workflow/process.
+**Related skills:**
+- **For test patterns and anti-patterns**, load the `testing` skill
+- **For refactoring guidance**, load the `refactoring` skill
+- **For small increment planning**, load the `planning` skill
+
+This skill focuses on the TDD workflow and discipline.
 
 ---
 

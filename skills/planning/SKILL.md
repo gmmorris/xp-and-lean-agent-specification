@@ -73,27 +73,13 @@ Each step MUST:
 
 ## TDD Integration
 
-**Every step follows RED-GREEN-REFACTOR.** See `testing` skill for factory patterns.
+**Every step follows RED-GREEN-REFACTOR.** Load the `tdd` skill for detailed workflow.
 
-```
-FOR EACH STEP:
-    │
-    ├─► RED: Write failing test FIRST
-    │   - Test describes expected behavior
-    │   - Test fails for the right reason
-    │
-    ├─► GREEN: Write MINIMUM code to pass
-    │   - No extra features
-    │   - No premature optimization
-    │   - Just make the test pass
-    │
-    ├─► REFACTOR: Assess improvements
-    │   - See `refactoring` skill
-    │   - Only if it adds value
-    │   - All tests still pass
-    │
-    └─► STOP: Wait for commit approval
-```
+**For each step:**
+1. RED: Write failing test first
+2. GREEN: Write minimum code to pass
+3. REFACTOR: Assess improvements (load `refactoring` skill)
+4. STOP: Wait for commit approval
 
 **No exceptions. No "I'll add tests later."**
 

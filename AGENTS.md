@@ -18,22 +18,26 @@ The practices below aren't rules to follow blindly—they're patterns that have 
 
 This AGENTS.md provides high-level guidance. For detailed workflows, patterns, and examples, load the relevant skill:
 
+**When to load skills:**
+
+| Situation | Load These Skills |
+|-----------|------------------|
+| Starting any code work | `tdd`, `testing`, `refactoring` |
+| Writing TypeScript | `typescript-strict` |
+| Significant design work | `planning` |
+| Understanding expectations and working practices | `expectations` |
+| Reviewing test quality | `test-design-reviewer` |
+
 **Core workflow skills:**
 - `tdd` - Detailed TDD workflow with examples and common pitfalls
 - `testing` - Testing patterns, factory functions, and antipatterns
 - `test-design-reviewer` - Framework for reviewing test design quality
 - `refactoring` - Safe refactoring methodology and techniques
 - `planning` - Three-document model (PLAN.md, WIP.md, LEARNINGS.md) for significant work
-- `expectations` - Best practices for capturing learnings and documenting code changes
+- `expectations` - Working practices, agent guidance, code quality principles, and documentation
 
 **Language specific skills:**
 - `typescript-strict` - Detailed TypeScript strict mode guidelines and patterns
-
-**When to load skills:**
-- Load Language specific skills when working in that language
-- Load `tdd`, `testing` and `refactoring` at the start of any coding work
-- Load `planning` when starting work that involves significant design or uncertainty
-- Load other skills as needed for specific guidance
 
 Skills contain detailed examples that this document intentionally omits to stay focused on principles.
 
@@ -70,146 +74,42 @@ Skills contain detailed examples that this document intentionally omits to stay 
 
 For detailed TypeScript patterns and rationale, load the `typescript-strict` skill.
 
-### Test-Driven Development (TDD)
+## Core Non-Negotiables
 
-**TEST-DRIVEN DEVELOPMENT IS NON-NEGOTIABLE.** Every single line of production code must be written in response to a failing test. No exceptions. This is not a suggestion or a preference - it is the fundamental practice that enables all other principles in this document.
+### Test-Driven Development
 
-We follow Test-Driven Development (TDD) with a strong emphasis on behavior-driven testing and functional programming principles. All work should be done in small, iterative changes that maintain a working state throughout development.
+**TEST-DRIVEN DEVELOPMENT IS NON-NEGOTIABLE.** Every single line of production code must be written in response to a failing test. No exceptions. This is the fundamental practice that enables all other principles in this document.
 
-**Core principle**: RED-GREEN-REFACTOR is the rhythm in small, known-good increments. TDD is the fundamental practice.
+Follow the RED-GREEN-REFACTOR cycle in small, known-good increments. For detailed TDD workflow, examples, and common pitfalls, load the `tdd` skill.
 
-**The TDD Cycle:**
+### TypeScript Strict Mode
 
-1. **RED** - Write a failing test
-   - Write the test that describes the behavior you want
-   - The test MUST fail (if it passes, you're not testing new behavior)
-   - Do NOT write any production code yet
+**Strict mode always. No `any` types, ever.**
 
-2. **GREEN** - Make it pass with minimal code
-   - Write ONLY enough code to make the test pass
-   - Resist the urge to write "just a bit more"
-   - Prefer obvious/simple over clever/elegant at this stage
-
-3. **REFACTOR** - Improve the design
-   - Look for duplication, unclear names, awkward structure
-   - Only refactor if it adds clear value
-   - All tests must still pass after refactoring
-
-4. **COMMIT** - Confirm readiness before committing
-   - All tests pass?
-   - System in working state?
-   - Code is clean and readable?
-   - Each commit represents a complete, working increment
-
-**For detailed TDD workflow including examples and common pitfalls, load the `tdd` skill.**
-
-#### Testing Principles
-
-**Test behavior, not implementation.** Aim for 100% coverage through business behavior, not line coverage metrics.
-
-**Key practices:**
-- Tests are first-class code - clear, maintainable, fast
-- If it's hard to test, the design needs work
-- Unit tests for logic, integration tests for behavior
-- Avoid excessive mocking - test through real collaborators when possible
-- Use factory functions for test data (no `let`/`beforeEach`)
-- Tests must document expected business behavior
-- No 1:1 mapping between test files and implementation files
-- Test through public API exclusively
-
-**For detailed testing patterns, antipatterns, and examples, load the `testing` skill.**
-
-### Incremental Design
-- Start with the simplest design that works
-- Let patterns emerge from real needs, don't impose them upfront
-- Refactor continuously as understanding grows (but only when value is clear)
-- Code duplication is acceptable initially - wait for the third instance before abstracting (Rule of Three)
-- Prefer composition over inheritance, functions over frameworks
-
-### Code Quality
-- **Readability**: Code should read like prose. Names matter immensely.
-- **Minimalism**: Fewer lines, fewer files, fewer abstractions when possible
-- **Locality**: Related things should be near each other
-- **Reversibility**: Avoid decisions that are hard to undo
-- **Convention**: Follow existing patterns in the codebase unless there's a compelling reason to change
-
-### Code Style
-
-**Functional programming with immutable data. Self-documenting code.**
-
-**Core practices:**
-- No data mutation - immutable data structures only
-- Pure functions wherever possible
-- No nested if/else - use early returns or composition
-- Avoid comments - code should be self-documenting through clear naming
-- Prefer options objects over positional parameters
-- Use array methods (`map`, `filter`, `reduce`) over loops
-
-## Workflow Practices
-
-### Continuous Integration
-- Integrate to main frequently (multiple times per day if possible)
-- Keep the build green - broken builds are stop-the-line events
-- Run tests locally before committing and pushing
-- Small commits with clear messages explaining "why" not just "what"
+For detailed patterns and guidelines, load the `typescript-strict` skill.
 
 ### Working with Uncertainty
-- **Known knowns**: Execute with confidence
-- **Known unknowns**: Spike, research, ask questions - limit to 3-5 focused attempts
-- **Unknown unknowns**: Admit them. Build in feedback loops to surface them early
-- When stuck: Pause, explain the problem out loud (rubber duck), ask for help
 
-## Code Review Mindset
-- Reviews should be quick and focused
-- Focus on: correctness, readability, testability, security
-- Nitpicks are fine but labeled as such
-- "Ask, don't tell" - questions often work better than demands
-- Every review is a learning opportunity in both directions
+When facing uncertainty, don't guess or make assumptions:
 
-## Communication Style
-- **Keep project docs current** - Update docs when introducing changes
-- **Surface trade-offs** explicitly - there are no perfect solutions
-- **Admit uncertainty** - "I don't know" is a valid and respected answer
-- **Show, don't just tell** - code examples, diagrams, prototypes
-- **Document decisions**, especially the ones we chose NOT to make
+**Known unknowns** - Spike and research, but time-box to 3-5 focused attempts, then report findings and propose next steps.
 
-## What I Expect from Agents
+**When stuck** - State explicitly what's blocking you, show what you've tried, propose 2-3 alternative paths forward.
 
-**Core principle**: Think deeply, follow TDD strictly, capture learnings while context is fresh.
+**Never proceed on assumptions.** Ask clarifying questions instead.
 
-### When Writing Code
-- ALWAYS follow TDD - no production code without failing test first (load the `tdd` skill)
-- Make small, incremental changes that leave the system in a working state
-- Assess refactoring after every green (but only if it adds clear value)
-- Update change logs when introducing any change
-- Update documentation when introducing meaningful patterns or changes
-- After significant changes, document: gotchas discovered, patterns that emerged, decisions made and why
-- Ask "What do I wish I'd known at the start?" after significant changes
-- Explain trade-offs you're making
-- Flag areas of uncertainty or technical debt being introduced
+For detailed problem-solving approaches, load the `expectations` skill.
 
-### When Problem-Solving
-- Ask clarifying questions if the requirement is ambiguous
-- Propose the simplest solution first
-- Suggest alternatives if you see them
-- Challenge the premise if something seems overcomplicated
-- Time-box exploratory work and report findings
+### Documentation & Communication
 
-### When Stuck
-- State explicitly what's blocking you
-- Show what you've tried (list specific approaches)
-- Propose 2-3 alternative paths forward
-- Ask specific questions about trade-offs or unknowns
+**Keep documentation current.** After any significant change:
+- Update relevant docs (AGENTS.md, READMEs, etc.)
+- Document learnings: gotchas discovered, patterns emerged, decisions made
+- Ask: "What do I wish I'd known at the start?"
 
-### Anti-Patterns to Avoid
-- ❌ Writing production code before writing a failing test
-- ❌ Premature abstraction (wait for the Rule of Three)
-- ❌ Over-engineering "for future flexibility"
-- ❌ Skipping tests "to move faster"
-- ❌ Large, monolithic changes
-- ❌ Clever code that's hard to understand
-- ❌ Copy-pasting without understanding
-- ❌ Adding dependencies without evaluating trade-offs
+**Surface trade-offs explicitly.** Explain the reasoning behind significant decisions and the alternatives considered.
+
+For documentation framework and formats, load the `expectations` skill.
 
 ## Decision-Making Framework
 

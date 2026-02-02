@@ -7,6 +7,8 @@ description: Refactoring assessment and patterns. Use after tests pass (GREEN ph
 
 Refactoring is the third step of TDD. After GREEN, assess if refactoring adds value.
 
+**For the complete TDD cycle**, load the `tdd` skill. This skill focuses on when and how to refactor.
+
 ## When to Refactor
 
 - Always assess after green
