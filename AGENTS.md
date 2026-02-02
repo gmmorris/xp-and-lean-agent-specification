@@ -1,6 +1,6 @@
-# Engineering Philosophy & Working Agreement for Agents
+# Engineering Philosophy & Working Agreement
 
-## We Follow XP and Lean
+## Why We Follow XP and Lean
 
 Software engineering is fundamentally about managing complexity and uncertainty while delivering value. After years of experience, I've found that XP and Lean provide the most effective framework for this because they:
 
@@ -8,97 +8,125 @@ Software engineering is fundamentally about managing complexity and uncertainty 
 
 **Minimize waste through feedback loops**. The faster we can go from idea → working code → real feedback, the less time we spend building the wrong thing or over-engineering the right thing. Small batches, continuous integration, and TDD aren't bureaucracy—they're how we avoid building bridges to nowhere.
 
-**Respect the human element**. Vibe coding has its place, but we are building systems that scale, and products that deliver value in both the short **and** the long term. Given that context, our code is read 10x more than it's written. Systems outlive their original authors. Sustainable pace beats hero sprints. These methodologies put long-term maintainability and team health on equal footing with delivery speed.
+**Respect the human element**. Code is read 10x more than it's written. Systems outlive their original authors. Sustainable pace beats hero sprints. These methodologies put long-term maintainability and team health on equal footing with delivery speed.
+
+**These are baseline expectations.** When you see references to XP (Extreme Programming) and Lean Software Development throughout this document, I'm referring to their core values and principles. If you're unfamiliar with these methodologies, research them - they're fundamental to how we work.
 
 The practices below aren't rules to follow blindly—they're patterns that have emerged from these principles. When in doubt, return to the principles.
 
-### Core Principles
+## Working with Skills
 
-#### Extreme Programming (XP) Values
-- **Simplicity**: Do the simplest thing that could possibly work. YAGNI (You Aren't Gonna Need It) is sacred.
-- **Communication**: Code is communication. Write for humans first, computers second.
-- **Feedback**: Fast feedback loops at every level - tests, CI, deployment, user feedback.
-- **Courage**: Refactor mercilessly. Delete code. Challenge assumptions. Admit unknowns.
-- **Respect**: For the codebase, for future maintainers, for the users.
+This AGENTS.md provides high-level guidance. For detailed workflows, patterns, and examples, load the relevant skill:
 
-#### Lean Thinking
-- **Eliminate Waste**: No speculative features. No premature optimization. No gold plating.
-- **Amplify Learning**: Prototype, measure, learn. Fail fast and learn faster.
-- **Decide as Late as Possible**: Keep options open until we have real data.
-- **Deliver as Fast as Possible**: Small batches. Continuous integration. Ship often.
-- **Empower the Team**: Decisions at the point of knowledge.
-- **Build Quality In**: Testing isn't a phase, it's continuous.
-- **See the Whole**: Understand the system, not just the component.
+**Core workflow skills:**
+- `tdd` - Detailed TDD workflow with examples and common pitfalls
+- `testing` - Testing patterns, factory functions, and antipatterns
+- `test-design-reviewer` - Framework for reviewing test design quality
+- `refactoring` - Safe refactoring methodology and techniques
+- `planning` - Three-document model (PLAN.md, WIP.md, LEARNINGS.md) for significant work
+- `expectations` - Best practices for capturing learnings and documenting code changes
+
+**Language specific skills:**
+- `typescript-strict` - Detailed TypeScript strict mode guidelines and patterns
+
+**When to load skills:**
+- Load Language specific skills when working in that language
+- Load `tdd`, `testing` and `refactoring` at the start of any coding work
+- Load `planning` when starting work that involves significant design or uncertainty
+- Load other skills as needed for specific guidance
+
+Skills contain detailed examples that this document intentionally omits to stay focused on principles.
 
 ## How I Work
 
 ### Starting Any Task
 1. **Understand the "why"** before the "how" - What problem are we actually solving? For whom?
 2. **Challenge assumptions** - Is this necessary? Can we solve this with less?
-3. **Spike if uncertain** - Time-box exploration of unknowns (30min-2hrs max)
+3. **Spike if uncertain** - Limit exploration to 3-5 focused attempts, then report findings and propose next steps
 4. **Slice vertically** - Break work into end-to-end deliverable increments
 
 ## Development Approach
 
-### Preferred Tools:
+### Preferred Tools
 
 - **Language**:
     - **Web**: TypeScript (strict mode)
     - **APIs and Business Logic**: Rust or Go
     - **Systems and CLI**: Rust
-    - **Data Science**: Python, minimize use where possible
     - **IaC**: Terraform
 - **Testing**:
     - **Web**: Vitest + React Testing Library
 - **State Management**: Prefer immutable patterns
 
+#### TypeScript Guidelines
+
+**Core principle**: Strict mode always. Schema-first at trust boundaries, types for internal logic.
+
+**Quick reference:**
+- No `any` types - ever (use `unknown` if type truly unknown)
+- No type assertions without justification
+- Define schemas first, derive types from them (Zod/Standard Schema)
+- Use schemas at trust boundaries, plain types for internal logic
+
+For detailed TypeScript patterns and rationale, load the `typescript-strict` skill.
+
 ### Test-Driven Development (TDD)
 
 **TEST-DRIVEN DEVELOPMENT IS NON-NEGOTIABLE.** Every single line of production code must be written in response to a failing test. No exceptions. This is not a suggestion or a preference - it is the fundamental practice that enables all other principles in this document.
 
-I follow Test-Driven Development (TDD) with a strong emphasis on behavior-driven testing and functional programming principles. All work should be done in small, incremental changes that maintain a working state throughout development.
+We follow Test-Driven Development (TDD) with a strong emphasis on behavior-driven testing and functional programming principles. All work should be done in small, iterative changes that maintain a working state throughout development.
 
 **Core principle**: RED-GREEN-REFACTOR is the rhythm in small, known-good increments. TDD is the fundamental practice.
 
-**Quick reference:**
-- RED: Write failing test first (NO production code without failing test)
-- GREEN: Write MINIMUM code to pass test
-- REFACTOR: Assess improvement opportunities (only refactor if adds value)
-- **Wait for commit approval** before every commit
-- Each increment leaves codebase in working state
-- Capture learnings as they occur, merge at end
+**The TDD Cycle:**
 
-For detailed TDD workflow, load the `tdd` skill.
-For refactoring methodology, load the `refactoring` skill.
-For significant work, load the `planning` skill for three-document model (PLAN.md, WIP.md, LEARNINGS.md).
+1. **RED** - Write a failing test
+   - Write the test that describes the behavior you want
+   - The test MUST fail (if it passes, you're not testing new behavior)
+   - Do NOT write any production code yet
+
+2. **GREEN** - Make it pass with minimal code
+   - Write ONLY enough code to make the test pass
+   - Resist the urge to write "just a bit more"
+   - Prefer obvious/simple over clever/elegant at this stage
+
+3. **REFACTOR** - Improve the design
+   - Look for duplication, unclear names, awkward structure
+   - Only refactor if it adds clear value
+   - All tests must still pass after refactoring
+
+4. **COMMIT** - Confirm readiness before committing
+   - All tests pass?
+   - System in working state?
+   - Code is clean and readable?
+   - Each commit represents a complete, working increment
+
+**For detailed TDD workflow including examples and common pitfalls, load the `tdd` skill.**
 
 #### Testing Principles
 
-**Core principle**: Test behavior, not implementation. 100% coverage through business behavior.
+**Test behavior, not implementation.** Aim for 100% coverage through business behavior, not line coverage metrics.
 
-**Key Principles:**
-- Write tests first (TDD)
+**Key practices:**
 - Tests are first-class code - clear, maintainable, fast
 - If it's hard to test, the design needs work
-- Unit tests for logic, integration tests for behavior, avoid mocking excessively
-- Test behavior, not implementation
-- Test through public API exclusively
+- Unit tests for logic, integration tests for behavior
+- Avoid excessive mocking - test through real collaborators when possible
 - Use factory functions for test data (no `let`/`beforeEach`)
 - Tests must document expected business behavior
 - No 1:1 mapping between test files and implementation files
+- Test through public API exclusively
 
-For detailed testing patterns and examples, load the `testing` skill.
-For verifying test effectiveness through mutation analysis, load the `mutation-testing` skill.
-
+**For detailed testing patterns, antipatterns, and examples, load the `testing` skill.**
 
 ### Incremental Design
 - Start with the simplest design that works
 - Let patterns emerge from real needs, don't impose them upfront
-- Refactor continuously as understanding grows
-- Code duplication is acceptable initially - wait for the third instance before abstracting
+- Refactor continuously as understanding grows (but only when value is clear)
+- Code duplication is acceptable initially - wait for the third instance before abstracting (Rule of Three)
 - Prefer composition over inheritance, functions over frameworks
 
-#### Code Quality
+### Code Quality
 - **Readability**: Code should read like prose. Names matter immensely.
 - **Minimalism**: Fewer lines, fewer files, fewer abstractions when possible
 - **Locality**: Related things should be near each other
@@ -107,62 +135,56 @@ For verifying test effectiveness through mutation analysis, load the `mutation-t
 
 ### Code Style
 
-**Core principle**: Functional programming with immutable data. Self-documenting code.
+**Functional programming with immutable data. Self-documenting code.**
 
-**Quick reference:**
+**Core practices:**
 - No data mutation - immutable data structures only
 - Pure functions wherever possible
 - No nested if/else - use early returns or composition
-- No comments - code should be self-documenting
+- Avoid comments - code should be self-documenting through clear naming
 - Prefer options objects over positional parameters
 - Use array methods (`map`, `filter`, `reduce`) over loops
-
-For detailed patterns and examples, load the `functional` skill.
 
 ## Workflow Practices
 
 ### Continuous Integration
 - Integrate to main frequently (multiple times per day if possible)
 - Keep the build green - broken builds are stop-the-line events
-- Run tests locally before pushing
+- Run tests locally before committing and pushing
 - Small commits with clear messages explaining "why" not just "what"
-
-### Pair/Mob Programming
-- Complex problems benefit from collaboration
-- Knowledge sharing is continuous, not a separate activity
-- Driver/navigator dynamic - switching regularly
 
 ### Working with Uncertainty
 - **Known knowns**: Execute with confidence
-- **Known unknowns**: Spike, research, ask questions - time-box this
+- **Known unknowns**: Spike, research, ask questions - limit to 3-5 focused attempts
 - **Unknown unknowns**: Admit them. Build in feedback loops to surface them early
-- When stuck: Take a walk, explain the problem out loud (rubber duck), ask for help
+- When stuck: Pause, explain the problem out loud (rubber duck), ask for help
 
 ## Code Review Mindset
-- Reviews should be quick (< 1 hour turnaround ideally)
+- Reviews should be quick and focused
 - Focus on: correctness, readability, testability, security
 - Nitpicks are fine but labeled as such
 - "Ask, don't tell" - questions often work better than demands
 - Every review is a learning opportunity in both directions
 
 ## Communication Style
-- **Prefer async communication** with context (don't assume I remember every detail)
+- **Keep project docs current** - Update docs when introducing changes
 - **Surface trade-offs** explicitly - there are no perfect solutions
 - **Admit uncertainty** - "I don't know" is a valid and respected answer
 - **Show, don't just tell** - code examples, diagrams, prototypes
 - **Document decisions**, especially the ones we chose NOT to make
 
-## What I Expect from Agents like OpenCode and Claude Code
+## What I Expect from Agents
 
 **Core principle**: Think deeply, follow TDD strictly, capture learnings while context is fresh.
 
 ### When Writing Code
-- ALWAYS FOLLOW TDD - no production code without failing test
-- Make small, incremental changes
-- Assess refactoring after every green (but only if adds value)
-- Update AGENTS.md when introducing meaningful changes
+- ALWAYS follow TDD - no production code without failing test first (load the `tdd` skill)
+- Make small, incremental changes that leave the system in a working state
+- Assess refactoring after every green (but only if it adds clear value)
+- Update change logs when introducing any change
+- Update documentation when introducing meaningful patterns or changes
+- After significant changes, document: gotchas discovered, patterns that emerged, decisions made and why
 - Ask "What do I wish I'd known at the start?" after significant changes
-- Document gotchas, patterns, decisions, edge cases while context is fresh
 - Explain trade-offs you're making
 - Flag areas of uncertainty or technical debt being introduced
 
@@ -173,17 +195,14 @@ For detailed patterns and examples, load the `functional` skill.
 - Challenge the premise if something seems overcomplicated
 - Time-box exploratory work and report findings
 
-For detailed TDD workflow, load the `tdd` skill.
-For refactoring methodology, load the `refactoring` skill.
-For detailed guidance on expectations and documentation, load the `expectations` skill.
-
 ### When Stuck
-- Say so explicitly
-- Show what you've tried
-- Suggest next steps for investigation
-- Ask specific questions
+- State explicitly what's blocking you
+- Show what you've tried (list specific approaches)
+- Propose 2-3 alternative paths forward
+- Ask specific questions about trade-offs or unknowns
 
 ### Anti-Patterns to Avoid
+- ❌ Writing production code before writing a failing test
 - ❌ Premature abstraction (wait for the Rule of Three)
 - ❌ Over-engineering "for future flexibility"
 - ❌ Skipping tests "to move faster"
@@ -192,10 +211,8 @@ For detailed guidance on expectations and documentation, load the `expectations`
 - ❌ Copy-pasting without understanding
 - ❌ Adding dependencies without evaluating trade-offs
 
-## Specific Technical Preferences
-[Add your language-specific, framework-specific, or tooling preferences here]
-
 ## Decision-Making Framework
+
 When facing technical decisions, consider in this order:
 1. **Does it solve the actual problem?** (not a hypothetical future one)
 2. **Is it the simplest thing that could work?**
