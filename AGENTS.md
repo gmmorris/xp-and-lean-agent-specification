@@ -24,6 +24,7 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 |-----------|------------------|
 | Starting any code work | `tdd`, `testing`, `refactoring` |
 | Writing TypeScript | `typescript-strict` |
+| Writing Go | `go` |
 | Significant design work | `planning` |
 | Understanding expectations and working practices | `expectations` |
 | Reviewing test quality | `test-design-reviewer` |
@@ -41,6 +42,7 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 
 **Language specific skills:**
 - `typescript-strict` - Detailed TypeScript strict mode guidelines and patterns
+- `go` - Go patterns and teaching guidance for experienced engineers learning Go
 
 Skills contain detailed examples that this document intentionally omits to stay focused on principles.
 
@@ -76,6 +78,18 @@ Skills contain detailed examples that this document intentionally omits to stay 
 - Use schemas at trust boundaries, plain types for internal logic
 
 For detailed TypeScript patterns and rationale, load the `typescript-strict` skill.
+
+#### Go Guidelines
+
+**Core principle**: Write clear, idiomatic Go. Bring Rust-quality thinking (explicit errors, ownership discipline, composition) but respect Go's idioms.
+
+**Quick reference:**
+- Handle every error — never discard with `_`, always wrap with context
+- Accept interfaces, return structs — keep interfaces small (1-2 methods)
+- Organize by domain, not by technical layer — no `util` or `common` packages
+- Start synchronous — add goroutines only when there's a clear need
+
+For detailed Go patterns, Rust-to-Go concept bridges, and teaching guidance, load the `go` skill.
 
 ## Core Non-Negotiables
 
