@@ -27,11 +27,14 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 | Significant design work | `planning` |
 | Understanding expectations and working practices | `expectations` |
 | Reviewing test quality | `test-design-reviewer` |
+| Self-reviewing before presenting work as complete | `code-review` |
+| Reviewing a colleague's PR or code changes | `code-review` |
 
 **Core workflow skills:**
 - `tdd` - Detailed TDD workflow with examples and common pitfalls
 - `testing` - Testing patterns, factory functions, and antipatterns
 - `test-design-reviewer` - Framework for reviewing test design quality
+- `code-review` - Culture-aware code review for self-review and peer PR review
 - `refactoring` - Safe refactoring methodology and techniques
 - `planning` - Three-document model (PLAN.md, WIP.md, LEARNINGS.md) for significant work
 - `expectations` - Working practices, agent guidance, code quality principles, and documentation

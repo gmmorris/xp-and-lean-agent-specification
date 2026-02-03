@@ -108,11 +108,13 @@ description: Working expectations and documentation practices. Load this to unde
 
 ## Code Review Mindset
 
-- Reviews should be quick and focused
-- Focus on: correctness, readability, testability, security
-- Nitpicks are fine but labeled as such
-- "Ask, don't tell" - questions often work better than demands
+- Self-review your own work before presenting it as complete
+- When reviewing a colleague's PR, lead with curiosity and empathy
+- Focus on: correctness, design, testability, security, readability — in that order
+- Label comments clearly: blocking, suggestion, nitpick, question, praise
+- "Ask, don't tell" - questions invite dialogue; statements close it
 - Every review is a learning opportunity in both directions
+- Load the `code-review` skill for detailed review process and communication principles
 
 ## Communication Style
 
