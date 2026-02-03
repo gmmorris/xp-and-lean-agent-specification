@@ -25,7 +25,7 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 | Starting any code work | `tdd`, `testing`, `refactoring` |
 | Writing TypeScript | `typescript-strict` |
 | Writing Go | `go` |
-| Significant design work | `planning` |
+| Starting significant work or a new feature | `planning` |
 | Understanding expectations and working practices | `expectations` |
 | Reviewing test quality | `test-design-reviewer` |
 | Self-reviewing before presenting work as complete | `code-review` |
@@ -37,7 +37,7 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 - `test-design-reviewer` - Framework for reviewing test design quality
 - `code-review` - Culture-aware code review for self-review and peer PR review
 - `refactoring` - Safe refactoring methodology and techniques
-- `planning` - Three-document model (PLAN.md, WIP.md, LEARNINGS.md) for significant work
+- `planning` - Outcome-focused user stories, system analysis, acceptance criteria, and small increments
 - `expectations` - Working practices, agent guidance, code quality principles, and documentation
 
 **Language specific skills:**

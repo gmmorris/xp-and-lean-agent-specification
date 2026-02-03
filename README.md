@@ -36,7 +36,7 @@ Modular, loadable guidelines that agents pull in based on context. Each skill li
 | `test-design-reviewer` | Evaluates test quality using Dave Farley's 8 properties (Farley Score) |
 | `code-review` | Culture-aware code review for self-review and peer PR review |
 | `refactoring` | When and how to refactor, priority classification, DRY as knowledge |
-| `planning` | Three-document model (PLAN.md, WIP.md, LEARNINGS.md) for significant work |
+| `planning` | Outcome-focused user stories, system analysis, CHANGELOG, and small increments |
 | `expectations` | Working practices, code quality principles, documentation framework |
 | `typescript-strict` | TypeScript strict mode patterns, schema-first design, immutability |
 | `go` | Go patterns with teaching guidance for engineers coming from Rust/Java/Kotlin |
