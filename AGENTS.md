@@ -1,3 +1,24 @@
+# Agent Configuration
+
+## Project Type Detection
+
+Parse the project's CLAUDE.md front matter (YAML between `---` markers) to determine behavior.
+
+### Front Matter Schema
+
+| Field | Values | Behavior |
+|-------|--------|----------|
+| `type` | `knowledge-repository` | Second brain mode. Skip coding rules below. Load project's AGENTS.md instead. |
+| `type` | `coding` (or absent) | Coding project. Follow XP/Lean practices below. |
+| `role` | e.g., `second-brain` | Describes the agent's purpose |
+| `skills` | list | Project-specific skills to load from project's `skills/` |
+
+### Default Behavior (no front matter or `type: coding`)
+
+Follow XP and Lean development practices defined below.
+
+---
+
 # Engineering Philosophy & Working Agreement
 
 ## Why We Follow XP and Lean
