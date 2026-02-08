@@ -2,7 +2,7 @@
 
 ## Project Type Detection
 
-Parse the project's CLAUDE.md front matter (YAML between `---` markers) to determine behavior.
+Parse the project's AGENTS.md front matter (YAML between `---` markers) to determine behavior.
 
 ### Front Matter Schema
 
