@@ -15,6 +15,39 @@ description: Testing patterns for behavior-driven tests. Use when writing tests 
 
 ---
 
+## Test Naming
+
+Test names should describe the **business requirement being protected**, not the test data or implementation detail being exercised.
+
+When a test fails, its name should immediately tell you which requirement broke — not which fixture was used or which function was called.
+
+❌ **WRONG — named after test data:**
+```
+'accepts a real-world shapefile (HAGFISH)'
+'processes payment with card 4111111111111111'
+'validates user with email test@example.com'
+```
+
+❌ **WRONG — named after implementation:**
+```
+'calls validateAmount'
+'multipart handler returns 200'
+'processFiles returns Html<String>'
+```
+
+✅ **CORRECT — named after the business requirement:**
+```
+'accepts a shapefile upload where the geometry file exceeds 2MB'
+'rejects payments where the amount exceeds the daily limit'
+'rejects users with an invalid email format'
+```
+
+**Ask: if this test fails, what requirement broke?** The answer to that question is the test name. If the answer is "I don't know — it depends on the fixture", the name is describing data, not behaviour.
+
+A useful heuristic: if someone who has never seen the codebase reads the test name, can they understand what the system is supposed to do? If the name requires knowledge of the fixture, it is describing data, not behaviour.
+
+---
+
 ## Test Through Public API Only
 
 Never test implementation details. Test behavior through public APIs.
@@ -415,6 +448,8 @@ tests/
 
 When writing tests, verify:
 
+- [ ] Test names describe business requirements, not test data or implementation details
+- [ ] A failing test name alone communicates which requirement broke
 - [ ] Testing behavior through public API (not implementation details)
 - [ ] No mocks of the function being tested
 - [ ] No tests of private methods or internal state
