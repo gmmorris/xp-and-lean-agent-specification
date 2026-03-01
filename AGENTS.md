@@ -46,6 +46,7 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 | Starting any code work | `tdd`, `testing`, `refactoring` |
 | Writing TypeScript | `typescript-strict` |
 | Writing Go | `go` |
+| Writing Rust | `rust` |
 | Starting significant work or a new feature | `planning` |
 | Understanding expectations and working practices | `expectations` |
 | Reviewing test quality | `test-design-reviewer` |
@@ -64,6 +65,7 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 **Language specific skills:**
 - `typescript-strict` - Detailed TypeScript strict mode guidelines and patterns
 - `go` - Go patterns and teaching guidance for experienced engineers learning Go
+- `rust` - Rust patterns for web services and systems: testability boundaries, project structure, error handling
 
 Skills contain detailed examples that this document intentionally omits to stay focused on principles.
 
