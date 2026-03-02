@@ -221,6 +221,7 @@ The burden of proof is on the requester. 100% is the default expectation.
 4. **Run test** - confirm it passes
 5. **Refactor if valuable** - improve code structure
 6. **Commit** - with conventional commit message
+7. **Ask: does this behavior need an e2e test?** - see below
 
 ### Workflow Example
 
@@ -242,6 +243,27 @@ if (user.name === '') {
 git add .
 git commit -m "feat: reject empty user names"
 ```
+
+### When Unit Tests Are Sufficient — Ask About E2E
+
+When unit tests fully express a new behaviour, pause and ask:
+
+> *"If all unit tests were deleted, would an e2e test catch a regression in this behaviour?"*
+
+If yes, an e2e test is missing. Unit tests prove the logic is correct; e2e tests prove the behaviour reaches the user. Both are necessary — they are not substitutes for each other.
+
+**The trigger is user-visible behaviour.** Ask this question whenever:
+- A new response path is added (success message, error message, redirect)
+- A new user interaction is handled (form submission, file upload, button click)
+- An existing response is meaningfully changed (new field shown, wording changed)
+
+**Do not duplicate edge cases in e2e.** Unit tests own the edge cases (invalid input, missing fields, mismatched names). E2E tests own at minimum one representative of each distinct outcome the user can see.
+
+| Behaviour | Unit tests own | E2E tests own |
+|-----------|---------------|---------------|
+| Validation logic | All variants | One representative per error type |
+| Success path | All variants | At least one confirming the full message reaches the user |
+| Error path | All variants | At least one per distinct error the user sees |
 
 ---
 
@@ -346,3 +368,4 @@ Before marking work complete:
 - [ ] Tests verify behavior (not implementation details)
 - [ ] Refactoring assessed and applied if valuable
 - [ ] Conventional commit messages used
+- [ ] Each user-visible outcome has at least one e2e test confirming it reaches the user
