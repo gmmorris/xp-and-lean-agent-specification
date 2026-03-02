@@ -311,6 +311,45 @@ const getMockUser = (overrides?: Partial<User>): User => {
 
 ---
 
+## Use Domain APIs to Build Test Fixtures, Not Internal Mechanics
+
+When a library or domain module provides a way to construct a valid entity, use it in test fixtures — don't hand-craft the raw internal representation.
+
+Fixtures built from raw internals require the reader to understand format mechanics to verify the fixture is correct. Fixtures built from the domain API are self-explanatory: the fixture says what the thing *is*, not how bytes happen to be laid out.
+
+❌ **WRONG — raw byte manipulation; opaque without format knowledge:**
+```rust
+fn valid_shp_bytes() -> Vec<u8> {
+    let mut bytes = vec![0u8; 100];
+    bytes[0..4].copy_from_slice(&9994i32.to_be_bytes());   // file code?
+    bytes[28..32].copy_from_slice(&1000i32.to_le_bytes()); // version?
+    bytes[32..36].copy_from_slice(&1i32.to_le_bytes());    // shape type 1?
+    bytes
+}
+```
+
+✅ **CORRECT — uses the library's own writer; intent is immediately clear:**
+```rust
+fn valid_shp_bytes() -> Vec<u8> {
+    let mut buf = Cursor::new(Vec::new());
+    {
+        let mut writer = ShapeWriter::new(&mut buf);
+        writer.write_shape(&Point { x: 0.0, y: 0.0 }).expect("write shape");
+        writer.finalize().expect("finalize");
+    }
+    buf.into_inner()
+}
+```
+
+This principle extends beyond binary formats:
+- Use ORM/query builders to seed database rows, not raw SQL strings
+- Use schema factories (Zod, etc.) to construct valid objects, not plain object literals
+- Use the public constructor of a domain type, not `Default::default()` followed by field mutation
+
+The rule of thumb: **if understanding the fixture requires knowing how the format works internally, the fixture is wrong.**
+
+---
+
 ## Coverage Theater Detection
 
 Watch for these patterns that give fake 100% coverage:
