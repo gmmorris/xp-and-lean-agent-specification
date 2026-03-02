@@ -184,6 +184,28 @@ mod tests {
 
 ---
 
+## External Crates
+
+Prefer external crates over reimplementing established domain knowledge — binary format parsers, protocol encoders, cryptographic primitives, compression, and similar well-specified concerns are better served by a maintained library than by a hand-rolled implementation.
+
+**Reach for a crate when:**
+- The domain is well-specified (binary formats, protocols, standards)
+- The crate handles edge cases, spec compliance, and error conditions that would take significant effort to replicate correctly
+- The feature is not a core product differentiator
+
+**Implement yourself instead when:**
+- The feature *is* a core product differentiator — the thing that makes this product unique
+- The crate's abstraction leaks heavily into your domain model and a small local implementation is easier to reason about and maintain
+
+**Before adding a crate, verify:**
+- It is actively maintained (recent releases, issues being responded to)
+- It has meaningful usage (download count, number of dependents)
+- Its API fits your use case (e.g., accepts `Read + Seek` for in-memory buffers, not file paths only)
+
+**When a crate looks useful but is unmaintained or has very low usage, do not add it silently — ask the user.** State what you found (last release date, approximate download count, notable open issues) and offer the trade-off between using it and writing a minimal local implementation instead.
+
+---
+
 ## Anti-Patterns
 
 - ❌ **Business logic in async handler functions** — untestable; extract to plain functions first
