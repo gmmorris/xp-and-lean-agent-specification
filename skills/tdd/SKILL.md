@@ -18,22 +18,70 @@ This skill focuses on the TDD workflow and discipline.
 
 ---
 
+## Test Planning
+
+Before writing any code, plan the full test list as `[TEST]` comment stubs. Convert them one at a time — never write ahead.
+
+```
+[TEST] Zero plus a number equals that number
+[TEST] Add two positive numbers
+[TEST] Add two negative numbers
+[TEST] Division by zero returns an error
+```
+
+### ZOMBIES — Test Completeness Checklist
+
+Walk through this before starting to catch gaps early. Source: [TDD Guided by ZOMBIES](https://blog.wingman-sw.com/tdd-guided-by-zombies) by James Grenning.
+
+**ZOM axis** (simple → complex — work in this order):
+- **Z** — Zero: initial/empty state, default values
+- **O** — One: first item, first transition
+- **M** — Many: multiple items, more complex scenarios
+
+**BIE considerations** (apply at each ZOM level):
+- **B** — Boundary: transitions between states in both directions (empty↔non-empty, not-full↔full)
+- **I** — Interface: let tests reveal what methods, parameters, and return types are needed — don't design upfront
+- **E** — Exceptions: error conditions; verify the object still works correctly after an error
+
+**Key principles:**
+- Test transitions, not just states — verify moving empty→non-empty and back
+- Hard-coded return values are fine initially; tests will force you to generalise
+- Get happy paths working first, then add error conditions
+
+---
+
 ## RED-GREEN-REFACTOR Cycle
 
 ### RED: Write Failing Test First
-- NO production code until you have a failing test
+
+Replace the next `[TEST]` comment with a real test. Before running:
+
+**Predict the failure.** State explicitly what you expect to fail and why. If the test passes without any implementation, it is testing nothing.
+
+The red phase has two steps:
+1. **Compile failure** — the class or method doesn't exist yet. Add the minimal stub to make it compile.
+2. **Assertion failure** — it compiles but returns the wrong value. This confirms the test is actually exercising something.
+
 - Test describes desired behavior, not implementation
 - Test should fail for the right reason
 
 ### GREEN: Minimum Code to Pass
+
+**Predict whether the tests will pass.** Trace the logic before running.
+
 - Write ONLY enough code to make the test pass
 - Resist adding functionality not demanded by a test
 - Commit immediately after green
+
+**Simplification step** — after going green, examine every line you just added and ask: *"Does a failing test require this?"* If no test requires a line, delete it. If the behaviour is needed, add a `[TEST]` comment for it first.
+
+This is the primary guard against speculative code.
 
 ### REFACTOR: Assess Improvements
 - Assess AFTER every green (but only refactor if it adds value)
 - Commit before refactoring
 - All tests must pass after refactoring
+- Consider whether a missing domain concept would make the code more expressive — new abstractions are fine as long as no new behaviour is introduced
 
 ---
 
@@ -339,6 +387,16 @@ After green, classify any issues:
 | Skip | Don't change | Already clean code |
 
 For detailed refactoring methodology, load the `refactoring` skill.
+
+---
+
+## Final Evaluation
+
+Once all `[TEST]` comments are implemented and passing:
+
+1. **Check for gaps** — re-run ZOMBIES against the finished code. Are there cases the test list missed?
+2. **Check for hardcoding** — is anything hard-coded that should be general? If so, add missing tests and implement properly.
+3. **Check expressiveness** — is the code as clear as it could be? If not, go back to the refactoring phase.
 
 ---
 
