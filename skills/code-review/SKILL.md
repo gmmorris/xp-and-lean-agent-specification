@@ -1,6 +1,12 @@
 ---
 name: code-review
 description: Culture-aware code review for self-review and peer PR review. Use when reviewing your own work before presenting it, or when reviewing a colleague's PR.
+allowed-tools:
+  - Bash
+  - Read
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 # Code Review

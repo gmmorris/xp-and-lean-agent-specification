@@ -1,6 +1,14 @@
 ---
 name: typescript-strict
 description: TypeScript strict mode patterns. Use when writing any TypeScript code.
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 # TypeScript Strict Mode

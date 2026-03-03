@@ -34,10 +34,16 @@ Modular, loadable guidelines that agents pull in based on context. Each skill li
 | `tdd` | RED-GREEN-REFACTOR workflow, coverage verification, commit discipline |
 | `testing` | Behavior-driven test patterns, test factories, coverage theater detection |
 | `test-design-reviewer` | Evaluates test quality using Dave Farley's 8 properties (Farley Score) |
+| `mutation-testing` | Find weak or missing tests by analysing if code changes would be caught |
+| `test-desiderata` | Analyse test quality against Kent Beck's 12 Test Desiderata properties |
 | `code-review` | Culture-aware code review for self-review and peer PR review |
 | `refactoring` | When and how to refactor, priority classification, DRY as knowledge |
 | `planning` | Outcome-focused user stories, system analysis, CHANGELOG, and small increments |
 | `expectations` | Working practices, code quality principles, documentation framework |
+| `story-splitting` | Detect oversized stories and split them using proven heuristics |
+| `hamburger-method` | Generate layered implementation options and compose minimal vertical slices |
+| `small-safe-steps` | Break any work into 1-3h increments with the expand-contract pattern |
+| `complexity-review` | Challenge technical proposals against 30 complexity dimensions |
 | `typescript-strict` | TypeScript strict mode patterns, schema-first design, immutability |
 | `go` | Go patterns with teaching guidance for engineers coming from Rust/Java/Kotlin |
 
@@ -70,4 +76,6 @@ Adapt paths to your setup. The key requirement is that `AGENTS.md` can reference
 
 This specification is adapted from [Paul Hummond's .dotfiles](https://github.com/citypaul/.dotfiles). The `test-design-reviewer` skill is adapted from [Andrea Laforgia's claude-code-agents](https://github.com/andlaf-ak/claude-code-agents).
 
-Thank you to Paul and Andrea for creating and sharing these excellent specifications.
+The following skills are adapted from [Lada Kesseler's Skill Factory](https://github.com/lada-k/skill-factory) (Apache License 2.0): `mutation-testing`, `test-desiderata`, `story-splitting`, `hamburger-method`, `small-safe-steps`, and `complexity-review`. The Hamburger Method is by Gojko Adzic. The Small Safe Steps expand-contract pattern and the 30 Complexity Dimensions are by Eduardo Ferro. See NOTICE for full copyright details.
+
+Thank you to Paul, Andrea, Lada, Gojko, and Eduardo for creating and sharing these excellent practices.

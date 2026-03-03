@@ -1,6 +1,14 @@
 ---
 name: rust
 description: Rust patterns for web services and systems code. Use when writing any Rust code — covers testability boundaries, project structure, error handling, and module organisation.
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 # Rust

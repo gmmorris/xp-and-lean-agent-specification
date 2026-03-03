@@ -1,6 +1,14 @@
 ---
 name: go
 description: Go language patterns and teaching guidance. Use when writing any Go code. The user is an experienced engineer (Rust, Java, Kotlin) learning Go — explain decisions, bridge concepts, and prioritize understanding over speed.
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 # Go

@@ -1,6 +1,11 @@
 ---
 name: planning
 description: Planning work in small, known-good increments. Use when starting significant work or breaking down complex tasks.
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - AskUserQuestion
 ---
 
 # Planning in Small Increments

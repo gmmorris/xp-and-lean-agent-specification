@@ -50,17 +50,30 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 | Starting significant work or a new feature | `planning` |
 | Understanding expectations and working practices | `expectations` |
 | Reviewing test quality | `test-design-reviewer` |
+| Analysing test effectiveness | `mutation-testing` |
+| Evaluating test quality against Kent Beck's properties | `test-desiderata` |
 | Self-reviewing before presenting work as complete | `code-review` |
 | Reviewing a colleague's PR or code changes | `code-review` |
+| Breaking a large feature into deliverable slices | `story-splitting`, `hamburger-method` |
+| Planning safe implementation of a feature or migration | `small-safe-steps` |
+| Challenging a complex technical proposal | `complexity-review` |
 
 **Core workflow skills:**
 - `tdd` - Detailed TDD workflow with examples and common pitfalls
 - `testing` - Testing patterns, factory functions, and antipatterns
 - `test-design-reviewer` - Framework for reviewing test design quality
+- `mutation-testing` - Find weak or missing tests by analysing if code changes would be caught
+- `test-desiderata` - Analyse test quality against Kent Beck's 12 Test Desiderata properties
 - `code-review` - Culture-aware code review for self-review and peer PR review
 - `refactoring` - Safe refactoring methodology and techniques
 - `planning` - Outcome-focused user stories, system analysis, acceptance criteria, and small increments
 - `expectations` - Working practices, agent guidance, code quality principles, and documentation
+
+**Delivery planning skills:**
+- `story-splitting` - Detect oversized stories and split them using proven heuristics
+- `hamburger-method` - Generate layered implementation options and compose minimal vertical slices
+- `small-safe-steps` - Break any work into 1-3h increments with the expand-contract pattern for risky changes
+- `complexity-review` - Challenge technical proposals against 30 complexity dimensions; push for simplest viable approach
 
 **Language specific skills:**
 - `typescript-strict` - Detailed TypeScript strict mode guidelines and patterns
@@ -74,6 +87,20 @@ Skills contain detailed examples that this document intentionally omits to stay 
 Each skill defines a `STARTER_CHARACTER` emoji. Always start replies with your active STARTER_CHARACTER(s) followed by a space. Stack emojis when multiple skills are active — don't replace. The default (no skill loaded) is 🍀, confirming global rules are active.
 
 Examples: `🍀` (global rules only) · `🍀 🧪` (global + testing skill) · `🔴` (TDD red phase)
+
+## Skill Tool Constraints
+
+Each skill defines `allowed-tools` in its frontmatter — the tools appropriate for that skill's mode. Treat this as binding guidance:
+
+| Skill type | Typical tools | Rationale |
+|------------|--------------|-----------|
+| Advisory (story-splitting, hamburger-method, small-safe-steps, complexity-review) | `Read`, `AskUserQuestion` | Think and question — don't implement |
+| Analysis (code-review, test-design-reviewer, test-desiderata, mutation-testing) | `Read`, `Glob`, `Grep`, `Bash`, `AskUserQuestion` | Investigate but don't modify |
+| Documentation (planning) | `Read`, `Write`, `Edit`, `AskUserQuestion` | Produce artefacts, not code |
+| Reference (expectations) | `Read`, `AskUserQuestion` | Absorb and clarify |
+| Implementation (tdd, testing, refactoring, language skills) | All tools | Build, test, deploy |
+
+When a skill restricts tools, don't reach outside that list without a clear reason. The constraint is intentional — it reflects what the skill is *for*. Advisory skills should be challenging your thinking, not writing code on your behalf.
 
 ## How I Work
 

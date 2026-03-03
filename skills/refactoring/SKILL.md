@@ -1,6 +1,14 @@
 ---
 name: refactoring
 description: Refactoring assessment and patterns. Use after tests pass (GREEN phase) to assess improvement opportunities.
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 # Refactoring

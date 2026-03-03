@@ -1,6 +1,9 @@
 ---
 name: expectations
 description: Working expectations and documentation practices. Load this to understand how to work effectively with this codebase, agent guidance, code quality principles, and collaboration practices.
+allowed-tools:
+  - Read
+  - AskUserQuestion
 ---
 
 # Expectations

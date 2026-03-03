@@ -4,6 +4,11 @@ description: Evaluates test quality using Dave Farley's 8 properties. Use when r
 context: fork
 agent: Explore
 model: sonnet
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 STARTER_CHARACTER = 🔬

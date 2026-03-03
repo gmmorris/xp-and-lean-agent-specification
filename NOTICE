@@ -1,0 +1,44 @@
+XP and Lean Agent Specification
+Copyright (c) Gidi Meir Bravo-Morris and Paul Hammond
+
+This product includes software developed by third parties under the
+Apache License, Version 2.0. See http://www.apache.org/licenses/LICENSE-2.0
+
+---
+
+Skill Factory
+Copyright (c) Lada Kesseler
+Licensed under the Apache License, Version 2.0
+Source: https://github.com/lada-k/skill-factory
+
+The following skills in this repository are adapted from the Skill Factory:
+- skills/mutation-testing/SKILL.md
+- skills/test-desiderata/SKILL.md
+- skills/story-splitting/SKILL.md
+- skills/hamburger-method/SKILL.md
+- skills/small-safe-steps/SKILL.md
+- skills/complexity-review/SKILL.md
+
+Adaptations include: inlining reference material, removing tool-specific
+configuration, updating skill cross-references, and adding TypeScript/
+JavaScript-specific content from Skill Factory language modules.
+
+---
+
+Third-party concepts incorporated into adapted skills:
+
+Hamburger Method — by Gojko Adzic
+https://gojko.net/2012/01/23/splitting-user-stories-the-hamburger-method/
+
+Small Safe Steps / Expand-Contract Pattern — by Eduardo Ferro
+https://www.eferro.net/
+
+30 Complexity Dimensions and Basal Cost of Software — by Eduardo Ferro
+https://www.eferro.net/2021/02/basal-cost-of-software.html
+
+Test Desiderata — by Kent Beck
+https://testdesiderata.com/
+https://medium.com/@kentbeck_7670/test-desiderata-94150638a4b3
+
+TDD Guided by ZOMBIES — by James Grenning
+https://blog.wingman-sw.com/tdd-guided-by-zombies

@@ -1,6 +1,14 @@
 ---
 name: testing
 description: Testing patterns for behavior-driven tests. Use when writing tests or test factories.
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 # Testing Patterns
