@@ -5,6 +5,8 @@ description: Planning work in small, known-good increments. Use when starting si
 
 # Planning in Small Increments
 
+STARTER_CHARACTER = 📋
+
 **All work must be done in small, known-good increments.** Each increment leaves the codebase in a working state where all tests pass.
 
 ## Documents

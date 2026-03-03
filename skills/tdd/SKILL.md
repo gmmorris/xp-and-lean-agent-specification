@@ -5,6 +5,8 @@ description: Test-Driven Development workflow. Use for ALL code changes - featur
 
 # Test-Driven Development
 
+STARTER_CHARACTER = 🔴 for red (failing test), 🌱 for green (passing), 🌀 for refactor
+
 TDD is the fundamental practice. Every line of production code must be written in response to a failing test.
 
 **Related skills:**

@@ -5,6 +5,8 @@ description: Working expectations and documentation practices. Load this to unde
 
 # Expectations
 
+STARTER_CHARACTER = 📐
+
 ## Core Non-Negotiables
 
 1. **TEST-DRIVEN DEVELOPMENT IS MANDATORY**

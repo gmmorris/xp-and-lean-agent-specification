@@ -5,6 +5,8 @@ description: Testing patterns for behavior-driven tests. Use when writing tests 
 
 # Testing Patterns
 
+STARTER_CHARACTER = 🧪
+
 **This skill focuses on test patterns and anti-patterns. For the TDD workflow (RED-GREEN-REFACTOR cycle), load the `tdd` skill.**
 
 ## Core Principle

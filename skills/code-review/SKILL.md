@@ -5,6 +5,8 @@ description: Culture-aware code review for self-review and peer PR review. Use w
 
 # Code Review
 
+STARTER_CHARACTER = 👁️
+
 ## When to Use This Skill
 
 **Self-review**: Before presenting code as complete, review your own changes through this lens. This catches issues early and models the standards you hold for all code.

@@ -5,6 +5,8 @@ description: Rust patterns for web services and systems code. Use when writing a
 
 # Rust
 
+STARTER_CHARACTER = 🦀
+
 ## Core Principle: Functional Core, Imperative Shell
 
 Every Rust service separates into two layers:

@@ -58,6 +58,10 @@ ln -sf "$PWD/skills" ~/.claude/skills
 # For OpenCode or shared agent config
 ln -sf "$PWD/AGENTS.md" ~/.config/opencode/AGENTS.md
 ln -sf "$PWD/skills" ~/.config/opencode/skills
+
+# For Gemini
+ln -sf "$PWD/GEMINI.md" ~/.gemini/GEMINI.md
+ln -sf "$PWD/skills" ~/.gemini/skills
 ```
 
 Adapt paths to your setup. The key requirement is that `AGENTS.md` can reference the skills directory.

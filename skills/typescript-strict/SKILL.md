@@ -5,6 +5,8 @@ description: TypeScript strict mode patterns. Use when writing any TypeScript co
 
 # TypeScript Strict Mode
 
+STARTER_CHARACTER = 🔷
+
 ## Core Rules
 
 1. **No `any`** - ever. Use `unknown` if type is truly unknown

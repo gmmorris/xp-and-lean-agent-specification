@@ -69,6 +69,12 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 
 Skills contain detailed examples that this document intentionally omits to stay focused on principles.
 
+## Visual Skill Indicators
+
+Each skill defines a `STARTER_CHARACTER` emoji. Always start replies with your active STARTER_CHARACTER(s) followed by a space. Stack emojis when multiple skills are active — don't replace. The default (no skill loaded) is 🍀, confirming global rules are active.
+
+Examples: `🍀` (global rules only) · `🍀 🧪` (global + testing skill) · `🔴` (TDD red phase)
+
 ## How I Work
 
 ### Starting Any Task
