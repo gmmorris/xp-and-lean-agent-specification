@@ -17,6 +17,19 @@ Parse the project's AGENTS.md front matter (YAML between `---` markers) to deter
 
 Follow XP and Lean development practices defined below.
 
+### Startup Announcement
+
+At the start of every session, include this block at the top of your first reply:
+
+```
+<emoji> **<role>** · <type> · Skills: <front matter skills, or "situational">
+<one sentence describing what you will help with in this project>
+```
+
+Example: `🍀 **XP/Lean Engineer** · coding · Skills: situational`
+
+Use 🍀 as the default emoji, or pick one fitting the `role` if no `STARTER_CHARACTER` is defined.
+
 ---
 
 # Engineering Philosophy & Working Agreement
