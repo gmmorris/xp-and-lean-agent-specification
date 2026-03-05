@@ -50,13 +50,11 @@ The practices below aren't rules to follow blindly—they're patterns that have 
 
 ## Working with Skills
 
-This AGENTS.md provides high-level guidance. For detailed workflows, patterns, and examples, load the relevant skill:
-
-**When to load skills:**
+This AGENTS.md provides the framework. Skills contain the detailed guidance. Load skills based on what you're doing:
 
 | Situation | Load These Skills |
 |-----------|------------------|
-| Starting any code work | `tdd`, `testing`, `refactoring` |
+| Starting any code work | `test-driven-development`, `testing`, `refactoring` |
 | Writing TypeScript | `typescript-strict` |
 | Writing Go | `go` |
 | Writing Rust | `rust` |
@@ -72,7 +70,7 @@ This AGENTS.md provides high-level guidance. For detailed workflows, patterns, a
 | Challenging a complex technical proposal | `complexity-review` |
 
 **Core workflow skills:**
-- `tdd` - Detailed TDD workflow with examples and common pitfalls
+- `test-driven-development` - Detailed TDD workflow with examples and common pitfalls
 - `testing` - Testing patterns, factory functions, and antipatterns
 - `test-design-reviewer` - Framework for reviewing test design quality
 - `mutation-testing` - Find weak or missing tests by analysing if code changes would be caught
@@ -115,7 +113,7 @@ Each skill defines `allowed-tools` in its frontmatter — the tools appropriate 
 
 When a skill restricts tools, don't reach outside that list without a clear reason. The constraint is intentional — it reflects what the skill is *for*. Advisory skills should be challenging your thinking, not writing code on your behalf.
 
-## How I Work
+## How We Work
 
 ### Starting Any Task
 1. **Understand the "why"** before the "how" - What problem are we actually solving? For whom?
@@ -123,95 +121,55 @@ When a skill restricts tools, don't reach outside that list without a clear reas
 3. **Spike if uncertain** - Limit exploration to 3-5 focused attempts, then report findings and propose next steps
 4. **Slice vertically** - Break work into end-to-end deliverable increments
 
-## Development Approach
-
-### Preferred Tools
-
-- **Language**:
-    - **Web**: TypeScript (strict mode)
-    - **APIs and Business Logic**: Rust or Go
-    - **Systems and CLI**: Rust
-    - **IaC**: Terraform
-- **Testing**:
-    - **Web**: Vitest + React Testing Library
-- **State Management**: Prefer immutable patterns
-
-#### TypeScript Guidelines
-
-**Core principle**: Strict mode always. Schema-first at trust boundaries, types for internal logic.
-
-**Quick reference:**
-- No `any` types - ever (use `unknown` if type truly unknown)
-- No type assertions without justification
-- Define schemas first, derive types from them (Zod/Standard Schema)
-- Use schemas at trust boundaries, plain types for internal logic
-
-For detailed TypeScript patterns and rationale, load the `typescript-strict` skill.
-
-#### Go Guidelines
-
-**Core principle**: Write clear, idiomatic Go. Bring Rust-quality thinking (explicit errors, ownership discipline, composition) but respect Go's idioms.
-
-**Quick reference:**
-- Handle every error — never discard with `_`, always wrap with context
-- Accept interfaces, return structs — keep interfaces small (1-2 methods)
-- Organize by domain, not by technical layer — no `util` or `common` packages
-- Start synchronous — add goroutines only when there's a clear need
-
-For detailed Go patterns, Rust-to-Go concept bridges, and teaching guidance, load the `go` skill.
-
 ## Core Non-Negotiables
 
 ### Test-Driven Development
 
-**TEST-DRIVEN DEVELOPMENT IS NON-NEGOTIABLE.** Every single line of production code must be written in response to a failing test. No exceptions. This is the fundamental practice that enables all other principles in this document.
+**TEST-DRIVEN DEVELOPMENT IS NON-NEGOTIABLE.** Every line of production code is written in response to a failing test. No exceptions.
 
-Follow the RED-GREEN-REFACTOR cycle in small, known-good increments. For detailed TDD workflow, examples, and common pitfalls, load the `tdd` skill.
+**Why this matters:** TDD embeds feedback into the development process. A failing test forces you to understand the requirement before writing code, prevents over-engineering, and creates a safety net for refactoring. It's how we "make the change easy" before making it.
 
-### TypeScript Strict Mode
+**What must be true:**
+- Every production code change begins with a failing test
+- Private helpers with branching logic are unit tested
+- User-facing features have E2E tests before marking complete
+- Tests verify behavior, not implementation details
 
-**Strict mode always. No `any` types, ever.**
-
-For detailed patterns and guidelines, load the `typescript-strict` skill.
+**How:** Load the `test-driven-development` skill when starting any coding work. It contains workflow, examples, common pitfalls, RED-GREEN-REFACTOR cycle details, and recovery strategies.
 
 ### Working with Uncertainty
 
-When facing uncertainty, don't guess or make assumptions:
+Don't guess or make assumptions:
+- **Known unknowns** - Spike and research (time-box to 3-5 attempts), then report findings
+- **When stuck** - State what's blocking you, show what you tried, propose 2-3 paths forward
+- **Never proceed on assumptions** - Ask clarifying questions
 
-**Known unknowns** - Spike and research, but time-box to 3-5 focused attempts, then report findings and propose next steps.
-
-**When stuck** - State explicitly what's blocking you, show what you've tried, propose 2-3 alternative paths forward.
-
-**Never proceed on assumptions.** Ask clarifying questions instead.
-
-For detailed problem-solving approaches, load the `expectations` skill.
+Load the `expectations` skill for detailed problem-solving approaches.
 
 ### Documentation & Communication
 
-**Keep documentation current.** After any significant change:
+**Keep documentation current.** After significant changes:
 - Update relevant docs (AGENTS.md, READMEs, etc.)
-- Document learnings: gotchas discovered, patterns emerged, decisions made
+- Document learnings and decisions
 - Ask: "What do I wish I'd known at the start?"
 
-**Surface trade-offs explicitly.** Explain the reasoning behind significant decisions and the alternatives considered.
+**Surface trade-offs explicitly.** Explain reasoning and alternatives considered.
 
-For documentation framework and formats, load the `expectations` skill.
+Load the `expectations` skill for documentation frameworks and formats.
 
 ## Decision-Making Framework
 
-When facing technical decisions, consider in this order:
+When facing technical decisions:
 1. **Does it solve the actual problem?** (not a hypothetical future one)
 2. **Is it the simplest thing that could work?**
 3. **Can we test it easily?**
 4. **Can we reverse it if we're wrong?**
-5. **Does it align with existing patterns in the codebase?**
-6. **Is the complexity justified by the value?**
 
-If the answer to 1 & 2 is yes, and 3-6 don't raise red flags, proceed.
+If 1 & 2 are yes and 3-4 don't raise red flags, proceed.
 
 ## Summary
 
-The key is to write clean, testable, functional code that evolves through small, safe increments. Every change should be driven by a test that describes the desired behavior, and the implementation should be the simplest thing that makes that test pass. When in doubt, favor simplicity and readability over cleverness.
+Write clean, testable code that evolves through small, safe increments. Every change should be driven by a test, and the implementation should be the simplest thing that makes that test pass. When in doubt, favor simplicity and readability over cleverness.
 
 ---
 
