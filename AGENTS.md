@@ -58,6 +58,7 @@ This AGENTS.md provides the framework. Skills contain the detailed guidance. Loa
 | Writing TypeScript | `typescript-strict` |
 | Writing Go | `go` |
 | Writing Rust | `rust` |
+| Creating a new Rust project from scratch | `rust-bootstrap` |
 | Starting significant work or a new feature | `planning` |
 | Understanding expectations and working practices | `expectations` |
 | Reviewing test quality | `test-design-reviewer` |
@@ -90,6 +91,7 @@ This AGENTS.md provides the framework. Skills contain the detailed guidance. Loa
 - `typescript-strict` - Detailed TypeScript strict mode guidelines and patterns
 - `go` - Go patterns and teaching guidance for experienced engineers learning Go
 - `rust` - Rust patterns for web services and systems: testability boundaries, project structure, error handling
+- `rust-bootstrap` - Bootstrap a new Rust project from scratch via architectural interview + incremental commits
 
 Skills contain detailed examples that this document intentionally omits to stay focused on principles.
 
