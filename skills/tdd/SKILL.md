@@ -37,6 +37,29 @@ Before writing any code, plan the full test list as `[TEST]` comment stubs. Conv
 [TEST] Division by zero returns an error
 ```
 
+### Scenarios, Not Assertions
+
+Each `[TEST]` stub should represent a distinct **user scenario or interaction path** — not a single assertion about the same outcome.
+
+If several stubs share the same setup and only differ in which structural detail they check, they are asserting one scenario from multiple angles. Collapse them into one stub that names the scenario.
+
+❌ **WRONG — one scenario fragmented into assertion-per-test stubs:**
+```
+[TEST] page has a sidebar
+[TEST] sidebar contains the navigation list
+[TEST] sidebar contains the shape panel
+[TEST] collapse button is present
+```
+
+✅ **CORRECT — one stub per scenario:**
+```
+[TEST] shows navigation and shape details alongside the map
+[TEST] the user can collapse the panel to focus on the map, and expand it again
+[TEST] dragging the panel edge adjusts its width
+```
+
+A useful check before committing to a stub list: *"If I had to describe what user need each test protects, would any two tests give the same answer?"* If yes, merge them.
+
 ### ZOMBIES — Test Completeness Checklist
 
 Walk through this before starting to catch gaps early. Source: [TDD Guided by ZOMBIES](https://blog.wingman-sw.com/tdd-guided-by-zombies) by James Grenning.

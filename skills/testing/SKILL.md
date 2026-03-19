@@ -58,6 +58,52 @@ A useful heuristic: if someone who has never seen the codebase reads the test na
 
 ---
 
+## One Test Per Scenario
+
+A test represents one user-visible scenario, not one assertion. When multiple tests share identical setup and differ only in what they assert about the same outcome, they are **fragmented** — all the assertions belong in one test.
+
+**Fragmentation smell:** identical `setup()` calls across tests, each checking one structural detail of the same state.
+
+❌ **WRONG — one scenario fragmented across four tests:**
+```tsx
+test('renders result-page container', () => {
+  setup()
+  expect(document.querySelector('.result-page')).toBeInTheDocument()
+})
+test('result-page has a floating toolbar', () => {
+  setup()
+  expect(document.querySelector('.result-page .floating-toolbar')).toBeInTheDocument()
+})
+test('the floating toolbar contains the submission list', async () => {
+  setup()
+  await waitFor(() =>
+    expect(document.querySelector('.floating-toolbar .submissions-list')).toBeInTheDocument()
+  )
+})
+test('the floating toolbar contains the shape sidebar', () => {
+  setup()
+  expect(document.querySelector('.floating-toolbar .shape-sidebar')).toBeInTheDocument()
+})
+```
+
+✅ **CORRECT — one test for the complete business value of that scenario:**
+```tsx
+test('shows collection navigation and shape details side by side with the map', async () => {
+  setup()
+  await waitFor(() => {
+    expect(screen.getByRole('link', { name: /all collections/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'survey' })).toBeInTheDocument()
+  })
+  expect(document.querySelector('.shape-map')).toBeInTheDocument()
+})
+```
+
+**Tests split on scenario boundaries** (different user paths, different interactions) — not assertion boundaries (different structural details of the same outcome).
+
+A useful check: can you write a meaningful scenario description for each separate test that differs from all the others? If two tests would share the same description, they should be one test.
+
+---
+
 ## Test Through Public API Only
 
 Never test implementation details. Test behavior through public APIs.
@@ -114,6 +160,41 @@ it('should process valid payments', () => {
   expect(result.data.transactionId).toBeDefined();
 });
 ```
+
+### In UI Tests: Prefer Semantic Queries Over CSS Selectors
+
+CSS class names and DOM structure are implementation details of how a component is styled and organised — they can change during refactoring without any change to the user's experience.
+
+❌ **WRONG — asserting CSS class names and DOM structure:**
+```tsx
+test('clicking collapse adds is-collapsed class to toolbar', async () => {
+  setup()
+  await userEvent.click(screen.getByRole('button', { name: /collapse/i }))
+  expect(document.querySelector('.floating-toolbar.is-collapsed')).toBeInTheDocument()
+})
+```
+
+✅ **CORRECT — asserting what the user perceives:**
+```tsx
+test('the user can collapse the panel to focus on the map, and expand it again', async () => {
+  setup()
+  await userEvent.click(screen.getByRole('button', { name: /collapse/i }))
+  // panel is collapsed — the user can now expand it
+  expect(screen.getByRole('button', { name: /expand/i })).toBeInTheDocument()
+})
+```
+
+**Prefer:**
+- `screen.getByRole()`, `screen.getByText()`, `screen.getByLabelText()` — queries that reflect how the user perceives content
+- Checking visible labels, headings, and accessible names — things the user reads
+- Checking what the user *can do next* after an interaction (affordances change)
+
+**Avoid:**
+- `document.querySelector('.css-class')` — a styling/structural detail
+- Asserting that a CSS class was added or removed to verify state changes
+- Asserting DOM nesting (`.toolbar .sidebar .card`) — tests the component hierarchy, not the behaviour
+
+**Exception:** when an element genuinely has no semantic role and no accessible name (e.g. a canvas, a map tile layer), a CSS class selector may be the only practical option. Note it as a known limitation in the test.
 
 ---
 
@@ -499,7 +580,9 @@ When writing tests, verify:
 
 - [ ] Test names describe business requirements, not test data or implementation details
 - [ ] A failing test name alone communicates which requirement broke
+- [ ] Each test represents one scenario — tests with identical setup and different single assertions are merged
 - [ ] Testing behavior through public API (not implementation details)
+- [ ] In UI tests, using semantic queries (`getByRole`, `getByText`) rather than CSS class selectors
 - [ ] No mocks of the function being tested
 - [ ] No tests of private methods or internal state
 - [ ] Factory functions return complete, valid objects
