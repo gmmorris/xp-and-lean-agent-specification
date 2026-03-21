@@ -68,6 +68,7 @@ STARTER_CHARACTER = 📐
 - ❌ Clever code that's hard to understand
 - ❌ Copy-pasting without understanding
 - ❌ Adding dependencies without evaluating trade-offs
+- ❌ Expressing uncertainty about a requirement then proceeding on an assumption instead of asking
 
 ## Code Quality Principles
 

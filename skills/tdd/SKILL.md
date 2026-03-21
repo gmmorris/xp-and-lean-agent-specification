@@ -18,7 +18,8 @@ TDD is a design technique that uses tests as a tool. Design emerges from usage, 
 When starting, announce: "Using TDD skill in mode: [auto|human]"
 
 MODE (user specifies, default: auto)
-- auto: DO NOT ask for confirmation or approval. Proceed through all steps without stopping.
+- auto: Proceed through TDD steps (red/green/refactor) without stopping for approval.
+  This does NOT skip requirement clarification. If the requirement is ambiguous, always stop and ask — regardless of mode.
 - human: wait for confirmation at key points
 
 STARTER_CHARACTER = 🔴 for red test, 🌱 for green, 🌀 when refactoring, always followed by a space
@@ -40,6 +41,7 @@ STARTER_CHARACTER = 🔴 for red test, 🌱 for green, 🌀 when refactoring, al
 
 ## Test Planning
 
+0. **Verify you understand the requirement.** Before writing any `[TEST]` stubs, check: can you identify 2 or more valid interpretations of what the user wants? If yes, STOP. Present the interpretations as numbered options and let the user choose. Do not pick one and proceed — that is an anti-pattern.
 1. Think about what the code you want to write should do
 2. Plan tests as single-line `[TEST]` comments. Example:
    ```
@@ -145,5 +147,6 @@ If yes, an e2e test is missing. Unit tests prove the logic is correct; e2e tests
 - ❌ Mocking the function being tested
 - ❌ Collapsing distinct user scenarios into assertion-level stubs
 - ❌ Skipping the e2e question after new user-visible behaviour
+- ❌ Expressing uncertainty about a requirement then proceeding on an assumption instead of asking
 
 **For detailed testing anti-patterns and factory patterns**, load the `testing` skill.

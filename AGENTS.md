@@ -146,6 +146,15 @@ Don't guess or make assumptions:
 - **When stuck** - State what's blocking you, show what you tried, propose 2-3 paths forward
 - **Never proceed on assumptions** - Ask clarifying questions
 
+#### Requirement Ambiguity Protocol
+
+When you're uncertain about what the user wants:
+1. **Present options, don't assume.** If you can see 2+ valid interpretations, present them as numbered options with a one-line description of each. Let the user choose.
+2. **"I think you mean X" followed by proceeding is an anti-pattern.** If you feel the need to say "I think" or "I assume," that's your signal to ask instead.
+3. **Distinguish requirement uncertainty from implementation uncertainty.** Requirement ambiguity (what to build) → always ask the user. Implementation ambiguity (how to build it) → spike/research, then propose options if multiple approaches exist.
+
+- ❌ Expressing uncertainty then proceeding on an assumption instead of asking
+
 Load the `expectations` skill for detailed problem-solving approaches.
 
 ### Documentation & Communication
