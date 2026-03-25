@@ -1,6 +1,6 @@
 ---
 name: rust
-description: Rust patterns for web services and systems code. Use when writing any Rust code — covers testability boundaries, project structure, error handling, and module organisation.
+description: Rust patterns for web services and systems code. Use when writing any Rust code — covers type-driven correctness, testability boundaries, project structure, error handling, and module organisation.
 allowed-tools:
   - Bash
   - Read
@@ -27,6 +27,125 @@ This separation is the prerequisite for TDD in Rust, not an optional style prefe
 **Related skills:**
 - **For TDD workflow**, load the `tdd` skill
 - **For testing patterns**, load the `testing` skill
+
+---
+
+## Type-Driven Correctness
+
+Rust's type system can enforce correctness at compile time that other languages defer to runtime or tests. Use it. When you reach for a hard-coded value, ask: "Is this a property of the data or a fixed protocol constant?" If it describes variable data, derive it from the data.
+
+### Derive discriminators from data
+
+When a function must tell an external API "this data is type X," compute X from the data via exhaustive `match`. Never hard-code a discriminator that describes variable input.
+
+❌ **WRONG — hard-coded discriminator:**
+```rust
+fn write_geojson_fgb(shapes: &[Shape], writer: &mut FgbWriter) -> Result<()> {
+    // BUG: assumes all shapes are Polygon, but data may contain MultiPolygon
+    let mut fgb = FgbWriter::create("shapes", GeometryType::Polygon)?;
+    for shape in shapes {
+        fgb.add_feature(shape.to_geojson())?;
+    }
+    fgb.write(writer)
+}
+```
+
+✅ **CORRECT — discriminator derived from data:**
+```rust
+fn geometry_type_for(shapes: &[Shape]) -> Result<GeometryType, ConversionError> {
+    let types: HashSet<_> = shapes.iter().map(|s| match s {
+        Shape::Polygon(_) => GeometryType::Polygon,
+        Shape::MultiPolygon(_) => GeometryType::MultiPolygon,
+        Shape::Point(_) => GeometryType::Point,
+        // exhaustive — compiler forces update when Shape gains a variant
+    }).collect();
+
+    match types.len() {
+        0 => Err(ConversionError::NoShapes),
+        1 => Ok(types.into_iter().next().unwrap()),
+        _ => Err(ConversionError::MixedGeometryTypes),
+    }
+}
+
+fn write_geojson_fgb(shapes: &[Shape], writer: &mut FgbWriter) -> Result<()> {
+    let geo_type = geometry_type_for(shapes)?;
+    let mut fgb = FgbWriter::create("shapes", geo_type)?;
+    // ...
+}
+```
+
+The exhaustive `match` means the compiler will force you to handle new `Shape` variants — a hard-coded value silently becomes wrong.
+
+### Newtypes as proof carriers
+
+When a value must come from a specific derivation step, wrap it in a newtype so call sites cannot fabricate it. Use this when the same broad enum appears at multiple call sites and a mismatch has already caused bugs.
+
+```rust
+/// Can only be constructed via `from_shapes`, guaranteeing the geometry type
+/// was derived from actual shape data.
+pub struct DerivedGeometryType(GeometryType);
+
+impl DerivedGeometryType {
+    pub fn from_shapes(shapes: &[Shape]) -> Result<Self, ConversionError> {
+        let geo_type = geometry_type_for(shapes)?;
+        Ok(DerivedGeometryType(geo_type))
+    }
+
+    pub fn get(&self) -> GeometryType {
+        self.0
+    }
+}
+
+// Now the FGB writer requires proof that the type was derived:
+fn write_fgb(shapes: &[Shape], geo_type: DerivedGeometryType, writer: &mut FgbWriter) -> Result<()> {
+    let mut fgb = FgbWriter::create("shapes", geo_type.get())?;
+    // ...
+}
+```
+
+The newtype makes it impossible to pass an arbitrary `GeometryType` — callers must go through `from_shapes`, which derives the value from real data.
+
+### Make invalid states unrepresentable
+
+Prefer types that cannot express wrong combinations over runtime validation. This applies to domain types where invariants matter.
+
+❌ **WRONG — callers must remember to check all fields:**
+```rust
+struct FileSet {
+    shp: Option<Vec<u8>>,
+    shx: Option<Vec<u8>>,
+    dbf: Option<Vec<u8>>,
+}
+// Every function using FileSet must check all three Options
+```
+
+✅ **CORRECT — the type guarantees the invariant:**
+```rust
+struct ValidatedFileSet {
+    shp: Vec<u8>,
+    shx: Vec<u8>,
+    dbf: Vec<u8>,
+}
+
+impl ValidatedFileSet {
+    pub fn new(shp: Vec<u8>, shx: Vec<u8>, dbf: Vec<u8>) -> Result<Self, ValidationError> {
+        if shp.is_empty() || shx.is_empty() || dbf.is_empty() {
+            return Err(ValidationError::MissingFiles);
+        }
+        Ok(Self { shp, shx, dbf })
+    }
+}
+// Functions taking ValidatedFileSet know all files are present and non-empty
+```
+
+### When hard-coding IS acceptable
+
+Not every constant needs derivation. Hard-code when:
+
+- **Test helpers** where you control the data and the value is part of the test fixture
+- **Fixed protocol constants** that are requirements of the protocol, not properties of variable input (e.g., a magic number, a fixed header version)
+
+The distinction: "this is always X because the spec says so" → hard-code. "This is X because the data I'm looking at happens to be X" → derive.
 
 ---
 
@@ -224,6 +343,8 @@ Prefer external crates over reimplementing established domain knowledge — bina
 - ❌ **Relying solely on E2E tests for business logic coverage** — slow feedback, hides bugs
 - ❌ **`unwrap()` in production code** — use `?` or explicit error handling
 - ❌ **`util` or `helpers` modules** — organise by domain, not by technical role
+- ❌ **Hard-coding an enum variant that describes variable data** — derive discriminators from the data via exhaustive match
+- ❌ **Passing a broad enum directly when the value must come from a derivation step** — consider a newtype to carry proof of derivation
 
 ---
 
@@ -239,3 +360,5 @@ When generating Rust code, verify:
 - [ ] Module structure follows domain boundaries, not technical layers
 - [ ] No `unwrap()` in production code paths
 - [ ] `#[cfg(test)]` modules are inline, not in separate test files
+- [ ] Enum variants passed to external APIs are derived from data, not hard-coded
+- [ ] Types that carry proof of derivation (newtypes) are used where a mismatch has caused bugs
