@@ -58,7 +58,7 @@ git clone <repo-url>
 cd xp-and-lean-agent-specification
 
 # For Claude Code
-ln -sf "$PWD/CLAUDE.md" ~/.claude/CLAUDE.md
+ln -sf "$PWD/AGENTS.md" ~/.claude/CLAUDE.md
 ln -sf "$PWD/skills" ~/.claude/skills
 
 # For OpenCode or shared agent config
@@ -66,7 +66,7 @@ ln -sf "$PWD/AGENTS.md" ~/.config/opencode/AGENTS.md
 ln -sf "$PWD/skills" ~/.config/opencode/skills
 
 # For Gemini
-ln -sf "$PWD/GEMINI.md" ~/.gemini/GEMINI.md
+ln -sf "$PWD/AGENTS.md" ~/.gemini/GEMINI.md
 ln -sf "$PWD/skills" ~/.gemini/skills
 ```
 
