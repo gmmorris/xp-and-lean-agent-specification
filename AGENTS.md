@@ -52,48 +52,32 @@ The practices below aren't rules to follow blindly—they're patterns that have 
 
 This AGENTS.md provides the framework. Skills contain the detailed guidance. Load skills based on what you're doing:
 
-| Situation | Load These Skills |
-|-----------|------------------|
-| Starting any code work | `test-driven-development`, `testing`, `refactoring` |
-| Writing TypeScript | `typescript-strict` |
-| Writing Go | `go` |
-| Writing Rust | `rust` |
-| Creating a new Rust project from scratch | `rust-bootstrap` |
-| Starting significant work or a new feature | `planning` |
-| Understanding expectations and working practices | `expectations` |
-| Reviewing test quality | `test-design-reviewer` |
-| Analysing test effectiveness | `mutation-testing` |
-| Evaluating test quality against Kent Beck's properties | `test-desiderata` |
-| Self-reviewing before presenting work as complete | `code-review` |
-| Reviewing a colleague's PR or code changes | `code-review` |
-| Breaking a large feature into deliverable slices | `story-splitting`, `hamburger-method` |
-| Planning safe implementation of a feature or migration | `small-safe-steps` |
-| Challenging a complex technical proposal | `complexity-review` |
-
-**Core workflow skills:**
-- `test-driven-development` - Detailed TDD workflow with examples and common pitfalls
-- `testing` - Testing patterns, factory functions, and antipatterns
-- `test-design-reviewer` - Framework for reviewing test design quality
-- `mutation-testing` - Find weak or missing tests by analysing if code changes would be caught
-- `test-desiderata` - Analyse test quality against Kent Beck's 12 Test Desiderata properties
-- `code-review` - Culture-aware code review for self-review and peer PR review
-- `refactoring` - Safe refactoring methodology and techniques
-- `planning` - Outcome-focused user stories, system analysis, acceptance criteria, and small increments
-- `expectations` - Working practices, agent guidance, code quality principles, and documentation
-
-**Delivery planning skills:**
-- `story-splitting` - Detect oversized stories and split them using proven heuristics
-- `hamburger-method` - Generate layered implementation options and compose minimal vertical slices
-- `small-safe-steps` - Break any work into 1-3h increments with the expand-contract pattern for risky changes
-- `complexity-review` - Challenge technical proposals against 30 complexity dimensions; push for simplest viable approach
-
-**Language specific skills:**
-- `typescript-strict` - Detailed TypeScript strict mode guidelines and patterns
-- `go` - Go patterns and teaching guidance for experienced engineers learning Go
-- `rust` - Rust patterns for web services and systems: testability boundaries, project structure, error handling
-- `rust-bootstrap` - Bootstrap a new Rust project from scratch via architectural interview + incremental commits
-
-Skills contain detailed examples that this document intentionally omits to stay focused on principles.
+| Skill | Purpose | Load when |
+|-------|---------|-----------|
+| `tdd` | RED-GREEN-REFACTOR workflow, recovery strategies | Starting any code work |
+| `testing` | Test patterns, factories, antipatterns | Starting any code work |
+| `refactoring` | Safe refactoring methodology | Starting any code work |
+| `typescript-strict` | TypeScript strict mode patterns | Writing TypeScript |
+| `go` | Go patterns and teaching guidance | Writing Go |
+| `rust` | Rust patterns for web services and systems | Writing Rust |
+| `rust-bootstrap` | Bootstrap new Rust project via interview | Creating a new Rust project |
+| `planning` | User stories, analysis, small increments | Starting significant work |
+| `expectations` | Working practices, code quality principles | Understanding how we work |
+| `test-design-reviewer` | Dave Farley's 8 test quality properties | Reviewing test quality |
+| `mutation-testing` | Find weak tests via mutation analysis | Analysing test effectiveness |
+| `test-desiderata` | Kent Beck's 12 Test Desiderata | Evaluating test quality |
+| `code-review` | Culture-aware self-review and PR review | Self-reviewing a commit or PR |
+| `story-splitting` | Detect and split oversized stories | Breaking features into slices |
+| `hamburger-method` | Layered options, minimal vertical slices | Breaking features into slices |
+| `small-safe-steps` | 1–3h increments, expand-contract pattern | Planning safe implementation |
+| `complexity-review` | Challenge proposals against 30 dimensions | Challenging technical proposals |
+| `debugging-and-error-recovery` | Triage checklist, stop-the-line | Debugging failures |
+| `deprecation-and-migration` | Strangler, adapter, feature flag patterns | Removing old systems or APIs |
+| `source-driven-development` | Official docs over training data | Building with versioned frameworks |
+| `code-simplification` | Clarity-focused refactoring | Simplifying working code |
+| `documentation-and-adrs` | ADRs and intent-capturing docs | Making architectural decisions |
+| `api-and-interface-design` | Hyrum's Law, contract-first design | Designing APIs or interfaces |
+| `security-and-hardening` | Three-tier boundary, OWASP prevention | Handling input, auth, secrets |
 
 ## Visual Skill Indicators
 
@@ -103,17 +87,15 @@ Examples: `🍀` (global rules only) · `🍀 🧪` (global + testing skill) · 
 
 ## Skill Tool Constraints
 
-Each skill defines `allowed-tools` in its frontmatter — the tools appropriate for that skill's mode. Treat this as binding guidance:
+Each skill defines `allowed-tools` in its frontmatter. Respect the constraint — it reflects what the skill is *for*:
 
-| Skill type | Typical tools | Rationale |
-|------------|--------------|-----------|
-| Advisory (story-splitting, hamburger-method, small-safe-steps, complexity-review) | `Read`, `AskUserQuestion` | Think and question — don't implement |
-| Analysis (code-review, test-design-reviewer, test-desiderata, mutation-testing) | `Read`, `Glob`, `Grep`, `Bash`, `AskUserQuestion` | Investigate but don't modify |
-| Documentation (planning) | `Read`, `Write`, `Edit`, `AskUserQuestion` | Produce artefacts, not code |
-| Reference (expectations) | `Read`, `AskUserQuestion` | Absorb and clarify |
-| Implementation (tdd, testing, refactoring, language skills) | All tools | Build, test, deploy |
-
-When a skill restricts tools, don't reach outside that list without a clear reason. The constraint is intentional — it reflects what the skill is *for*. Advisory skills should be challenging your thinking, not writing code on your behalf.
+| Skill type | Tools | Rationale |
+|------------|-------|-----------|
+| Advisory | `Read`, `AskUserQuestion` | Think and question — don't implement |
+| Analysis | `Read`, `Glob`, `Grep`, `Bash`, `AskUserQuestion` | Investigate but don't modify |
+| Documentation | `Read`, `Write`, `Edit`, `Glob`, `Grep`, `AskUserQuestion` | Produce artefacts, not code |
+| Reference | `Read`, `AskUserQuestion` | Absorb and clarify |
+| Implementation | All tools | Build, test, deploy |
 
 ## How We Work
 

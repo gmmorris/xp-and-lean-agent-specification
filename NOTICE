@@ -37,12 +37,24 @@ from agent-skills:
 - skills/tdd/SKILL.md (Bug Fixes: The Prove-It Pattern)
 - skills/refactoring/SKILL.md (Chesterton's Fence)
 - skills/code-review/SKILL.md (Change Sizing & Splitting; Change Descriptions; The Verification Story)
+- skills/code-review/references/security-checklist.md (adapted from references/security-checklist.md)
 - skills/planning/SKILL.md (cross-slice dependency graph; Parallelisation matrix)
 - skills/small-safe-steps/SKILL.md (Risk-First Sequencing; NOTICED-BUT-NOT-TOUCHING)
+- skills/typescript-strict/references/ (testing-patterns, performance-checklist, accessibility-checklist)
+- skills/debugging-and-error-recovery/SKILL.md (adapted from skills/debugging-and-error-recovery)
+- skills/deprecation-and-migration/SKILL.md (adapted from skills/deprecation-and-migration)
+- skills/source-driven-development/SKILL.md (adapted from skills/source-driven-development)
+- skills/code-simplification/SKILL.md (adapted from skills/code-simplification)
+- skills/documentation-and-adrs/SKILL.md (adapted from skills/documentation-and-adrs)
+- skills/api-and-interface-design/SKILL.md (adapted from skills/api-and-interface-design)
+- skills/security-and-hardening/SKILL.md (adapted from skills/security-and-hardening)
 
 Adaptations include: rewriting prose to match this repository's voice and
-XP/Lean framing, integrating concepts with existing skill structures, and
-aligning terminology (e.g. "tasks" → "steps", reframing "checkpoints").
+XP/Lean framing, integrating concepts with existing skill structures,
+aligning terminology (e.g. "tasks" → "steps", reframing "checkpoints"),
+removing TS/web-specific code examples where principles are language-agnostic,
+adding cross-references to related skills, and trimming overlap with
+existing skills (e.g. deduplicating security checklists, testing patterns).
 
 ---
 
