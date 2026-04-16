@@ -64,7 +64,7 @@ Whether self-reviewing or reviewing a peer's PR, evaluate in this priority order
 1. **Correctness** — Does the code do what was asked? Are edge cases handled? Are error paths covered, not just the happy path?
 2. **Design** — Does the approach fit the codebase? Is the change appropriately scoped? Are there decisions that would be hard to reverse?
 3. **Testability** — Was code driven by tests? Do tests describe behavior, not implementation? Would a stranger understand intent from test names alone?
-4. **Security** — Are there injection risks, data exposure, or trust boundary issues?
+4. **Security** — Are there injection risks, data exposure, or trust boundary issues? (See [security checklist](references/security-checklist.md) for detailed checks.)
 5. **Readability** — Would a teammate understand this code without explanation? Are names clear and descriptive? Is this the simplest version that solves the problem?
 
 Do not review for style — let automated tools handle formatting, linting, and style consistency.

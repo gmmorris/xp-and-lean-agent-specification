@@ -657,6 +657,14 @@ processPayment(userId, amount); // OK
 
 ---
 
+## References
+
+Stack-specific checklists and code recipes, loaded with this skill:
+
+- [Testing Patterns](references/testing-patterns.md) — Jest/Vitest assertions, React Testing Library, Supertest, Playwright
+- [Performance Checklist](references/performance-checklist.md) — Core Web Vitals, frontend/backend checklists, measurement commands
+- [Accessibility Checklist](references/accessibility-checklist.md) — WCAG 2.1 AA, keyboard navigation, ARIA patterns, testing tools
+
 ## Summary Checklist
 
 When writing TypeScript code, verify:
