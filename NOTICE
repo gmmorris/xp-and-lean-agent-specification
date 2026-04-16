@@ -2,7 +2,8 @@ XP and Lean Agent Specification
 Copyright (c) Gidi Meir Bravo-Morris and Paul Hammond
 
 This product includes software developed by third parties under the
-Apache License, Version 2.0. See http://www.apache.org/licenses/LICENSE-2.0
+Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+and the MIT License (https://opensource.org/licenses/MIT).
 
 ---
 
@@ -22,6 +23,26 @@ The following skills in this repository are adapted from the Skill Factory:
 Adaptations include: inlining reference material, removing tool-specific
 configuration, updating skill cross-references, and adding TypeScript/
 JavaScript-specific content from Skill Factory language modules.
+
+---
+
+agent-skills
+Copyright (c) 2025 Addy Osmani
+Licensed under the MIT License
+Source: https://github.com/addyosmani/agent-skills
+
+The following skills in this repository incorporate material adapted
+from agent-skills:
+- skills/testing/SKILL.md (test-double hierarchy; Test Pyramid + resource model)
+- skills/tdd/SKILL.md (Bug Fixes: The Prove-It Pattern)
+- skills/refactoring/SKILL.md (Chesterton's Fence)
+- skills/code-review/SKILL.md (Change Sizing & Splitting; Change Descriptions; The Verification Story)
+- skills/planning/SKILL.md (cross-slice dependency graph; Parallelisation matrix)
+- skills/small-safe-steps/SKILL.md (Risk-First Sequencing; NOTICED-BUT-NOT-TOUCHING)
+
+Adaptations include: rewriting prose to match this repository's voice and
+XP/Lean framing, integrating concepts with existing skill structures, and
+aligning terminology (e.g. "tasks" → "steps", reframing "checkpoints").
 
 ---
 

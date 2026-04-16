@@ -78,4 +78,6 @@ This specification is adapted from [Paul Hummond's .dotfiles](https://github.com
 
 The following skills are adapted from [Lada Kesseler's Skill Factory](https://github.com/lada-k/skill-factory) (Apache License 2.0): `mutation-testing`, `test-desiderata`, `story-splitting`, `hamburger-method`, `small-safe-steps`, and `complexity-review`. The Hamburger Method is by Gojko Adzic. The Small Safe Steps expand-contract pattern and the 30 Complexity Dimensions are by Eduardo Ferro. See NOTICE for full copyright details.
 
-Thank you to Paul, Andrea, Lada, Gojko, and Eduardo for creating and sharing these excellent practices.
+The following nuggets are adapted from [Addy Osmani's agent-skills](https://github.com/addyosmani/agent-skills) (MIT License): the test-double hierarchy and Test Pyramid (in `testing`), the Prove-It Pattern for bug fixes (in `tdd`), Chesterton's Fence (in `refactoring`), Change Sizing & Splitting, Change Descriptions, and the Verification Story (in `code-review`), the cross-slice dependency graph and parallelisation matrix (in `planning`), and Risk-First Sequencing plus NOTICED-BUT-NOT-TOUCHING (in `small-safe-steps`).
+
+Thank you to Paul, Andrea, Lada, Gojko, Eduardo, and Addy for creating and sharing these excellent practices.

@@ -69,6 +69,58 @@ Whether self-reviewing or reviewing a peer's PR, evaluate in this priority order
 
 Do not review for style — let automated tools handle formatting, linting, and style consistency.
 
+## Change Sizing & Splitting
+
+Reviewable change size is a property of the *author's* work, not the reviewer's stamina. A change too big to review well is a change that needs to be split, not powered through.
+
+```
+~100 lines    Good. Reviewable in one sitting.
+~300 lines    Acceptable for a single logical change.
+>1000 lines   Too large. Split it.
+```
+
+Exceptions: full-file deletions and automated refactors (codemods, formatter runs) where the reviewer verifies intent rather than every line.
+
+**When a change is too large, split it using one of these strategies:**
+
+| Strategy | How | When to use |
+|----------|-----|-------------|
+| **Stack** | Submit a small change, base the next on it | Sequential dependencies — each step builds on the last |
+| **By file group** | Separate changes for groups needing different reviewers | Cross-cutting concerns (e.g. backend + frontend + infra) |
+| **Horizontal** | Land shared code/stubs first, then the consumers | Layered architecture — foundations before features |
+| **Vertical** | Smaller end-to-end slices of the same feature | Feature work — favour this whenever possible |
+
+**Refactoring + new behaviour = two changes.** Submit them separately. A small rename inside a feature change is fine; mixing a substantive refactor with a feature is not.
+
+## Change Descriptions
+
+The description is the durable record of *why* a change exists. Months later, someone bisecting a regression or auditing history will see your description before they see your code. Write for them.
+
+**First line** — short, imperative, standalone:
+- ✅ "Delete the FizzBuzz RPC"
+- ✅ "Cache rendered scenarios in the planner"
+- ❌ "Fix bug" / ❌ "WIP" / ❌ "Phase 1" / ❌ "Add patch"
+
+**Body** — what's changing, and *why*. Include reasoning that isn't visible in the diff: trade-offs considered, alternatives rejected, links to issues or design docs, known limitations of the approach. If the change has a downside, name it — reviewers will spot it anyway, and acknowledging it builds trust.
+
+**Anti-patterns to avoid:**
+- "Fix bug" without saying which bug or what was wrong
+- "Move code from A to B" without saying why the move helps
+- "Phase 1" without describing what this phase actually delivers
+- "Misc improvements" — almost always means several unrelated changes were bundled
+
+## The Verification Story
+
+Reviewing the code is not enough — review the *evidence that the code works*. Both authors (in self-review) and reviewers (of peer PRs) should look for:
+
+- **What was tested?** Which automated tests cover the change? Were they run?
+- **Did CI pass?** Build, lint, tests — green across the board?
+- **For UI changes** — is there a screenshot or recording showing the new state?
+- **For behavioural changes** — is there a before/after that makes the difference visible?
+- **For bug fixes** — is there a reproduction test that fails without the fix?
+
+If the verification story is missing or thin, surface it before approving — even when the code looks right. "It compiles" is not verification. "I tested it locally" without saying *what* you tested isn't either.
+
 ## Self-Review Process
 
 Before presenting your work as ready, run through the evaluation criteria above against your own changes. Additionally check:
@@ -76,6 +128,7 @@ Before presenting your work as ready, run through the evaluation criteria above 
 - [ ] No leftover debugging code, commented-out blocks, or TODOs without context
 - [ ] No unintended file changes or formatting noise in the diff
 - [ ] Documentation updated if behavior or API has changed
+- [ ] Verification story is captured (tests run, screenshots for UI, before/after for behavioural changes)
 
 Apply the same rigor you'd want from a peer reviewer. Do not skip self-review because the change feels small or obvious.
 

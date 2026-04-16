@@ -39,6 +39,33 @@ STARTER_CHARACTER = 🔴 for red test, 🌱 for green, 🌀 when refactoring, al
 9. Test behavior, not implementation - check responses or state, not method calls
 10. Push back when something seems wrong or unclear
 
+## Bug Fixes: The Prove-It Pattern
+
+A bug is a missing test. Do not start by trying to fix it — start by writing a test that reproduces it.
+
+```
+Bug report arrives
+       │
+       ▼
+Write a test that demonstrates the bug
+       │
+       ▼
+Test FAILS  (the bug is now reproducible)
+       │
+       ▼
+Implement the fix
+       │
+       ▼
+Test PASSES  (the fix is proven)
+       │
+       ▼
+Run full test suite  (no regressions)
+```
+
+The test outlives the fix — it guards against the bug ever returning. "Fixing a bug without a test" is the same failure mode as "writing code without a test": trusting eyesight over feedback.
+
+**For complex or subtle bugs, separate authorship of the reproduction test from authorship of the fix.** In a multi-agent setup, spawn a subagent to write the reproduction test first, so that test and fix are written with independent understanding of the bug. This prevents the fix from being subconsciously tailored to pass a test that doesn't fully capture the bug.
+
 ## Test Planning
 
 0. **Verify you understand the requirement.** Before writing any `[TEST]` stubs, check: can you identify 2 or more valid interpretations of what the user wants? If yes, STOP. Present the interpretations as numbered options and let the user choose. Do not pick one and proceed — that is an anti-pattern.
@@ -141,6 +168,7 @@ If yes, an e2e test is missing. Unit tests prove the logic is correct; e2e tests
 ## Anti-Patterns
 
 - ❌ Writing production code without a failing test
+- ❌ Fixing a bug without a failing reproduction test
 - ❌ Testing implementation details (spies on internal methods)
 - ❌ Speculative code — logic without a test demanding it
 - ❌ Trusting coverage claims without verification

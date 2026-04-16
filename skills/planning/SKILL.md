@@ -67,6 +67,20 @@ Document the story, context, and acceptance criteria in PLAN.md. See the PLAN.md
 
 Decompose the user story into small, known-good increments. Each step should be informed by the system analysis — you know what exists, so you know what needs to change.
 
+**Map cross-slice dependencies before ordering.** Some slices unblock others — the auth middleware Slice 2 needs may not exist until Slice 1 lands. Sketch the dependency relationships explicitly, not in your head:
+
+```
+Slice 1: User can register
+    │
+    ├── Slice 2: User can log in (needs auth middleware from #1)
+    │       │
+    │       └── Slice 3: User can create a task (needs session from #2)
+    │
+    └── Slice 4: Admin can list users (independent of #2/#3 — can run in parallel)
+```
+
+Order slices so each one only depends on slices already landed. Independent slices can be sequenced in any order, or parallelised (see below).
+
 Each step must:
 - Leave all tests passing
 - Be independently deployable
@@ -91,6 +105,18 @@ Each step must:
 - Can explain to someone in 30 seconds
 - Obvious when done
 - Single responsibility
+
+## Parallelisation
+
+When work can run across multiple sessions or agents:
+
+| Type | Examples | Coordination needed |
+|------|----------|--------------------|
+| **Safe to parallelise** | Independent feature slices, tests for landed code, documentation | None — start in any order |
+| **Must be sequential** | Database migrations, shared state changes, dependency chains | Strict ordering — finish #1 before #2 starts |
+| **Needs coordination** | Slices that share a contract (API shape, event schema, type definition) | Define the contract first, then parallelise the consumers |
+
+When in doubt, sequence. Parallel work that turns out to share state mid-stream costs more than serial work that didn't need coordination.
 
 ## TDD Integration
 

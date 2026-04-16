@@ -25,6 +25,37 @@ STARTER_CHARACTER = 🧪
 
 ---
 
+## The Test Pyramid
+
+Invest testing effort proportionally — most tests should be small and fast:
+
+```
+          ╱╲
+         ╱  ╲         E2E Tests (~5%) - Full user flows, real browser
+        ╱────╲        
+       ╱      ╲       Integration Tests (~15%) - Component boundaries, API + test DB
+      ╱────────╲      
+     ╱          ╲     Unit Tests (~80%) - Pure logic, isolated, milliseconds each
+    ╱────────────╲
+```
+
+Beyond levels, classify by **resource budget**:
+
+| Size       | Constraints                                     | Speed         | Example                                 |
+|------------|-------------------------------------------------|---------------|-----------------------------------------|
+| **Small**  | Single process, no I/O, no network, no DB       | Milliseconds  | Pure function tests, data transforms    |
+| **Medium** | Multi-process OK, localhost only                | Seconds       | API test + test DB, component tests     |
+| **Large**  | Multi-machine OK, external services allowed     | Minutes       | E2E, perf benchmarks, staging           |
+
+Small tests should dominate your suite — they're fast, reliable, and easy to debug. If most tests are medium or large, the pyramid is inverted; reassess.
+
+**Decision guide:**
+- Pure logic, no side effects? → Unit (small)
+- Crosses a boundary (API, DB, file system)? → Integration (medium)
+- Critical user flow end-to-end? → E2E (large) — limit these to critical paths
+
+---
+
 ## Test Naming
 
 Test names should describe the **business requirement being protected**, not the test data or implementation detail being exercised.
@@ -234,6 +265,25 @@ describe('processPayment', () => {
 ```
 
 **Key insight:** When coverage drops, ask **"What business behavior am I not testing?"** not "What line am I missing?"
+
+---
+
+## Test Doubles: Real, Fake, Stub, Mock
+
+Not every test can use a real dependency — but the closer your test is to the real thing, the more confidence it gives you. Use the simplest test double that does the job.
+
+**Preference order (most to least preferred):**
+
+| Type     | What it is                                                        | Use when                                                                                 |
+|----------|-------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| **Real** | The actual production implementation                              | Always, if fast and deterministic                                                        |
+| **Fake** | A lightweight working implementation (e.g. in-memory repository)  | The real thing is too slow or stateful (disk, network) but you want behavioural fidelity |
+| **Stub** | Returns canned values, no behaviour                               | You only care about one code path — the dependency's response is fixed                   |
+| **Mock** | Verifies interactions (which method was called, with what arguments) | Sparingly — interaction checks couple tests to implementation                            |
+
+**Default to real. Reach for a double only when forced.** Over-mocking produces tests that pass while production breaks.
+
+**When to mock:** external APIs, email sending, payment providers — anything non-deterministic, slow, or with side effects you can't control. Mock at the boundary of your system, not within the code under test. If you find yourself mocking the thing you're trying to test, see *Coverage Theater Detection* below.
 
 ---
 
@@ -583,6 +633,7 @@ When writing tests, verify:
 - [ ] Each test represents one scenario — tests with identical setup and different single assertions are merged
 - [ ] Testing behavior through public API (not implementation details)
 - [ ] In UI tests, using semantic queries (`getByRole`, `getByText`) rather than CSS class selectors
+- [ ] Test doubles chosen at the right level (real > fake > stub > mock)
 - [ ] No mocks of the function being tested
 - [ ] No tests of private methods or internal state
 - [ ] Factory functions return complete, valid objects

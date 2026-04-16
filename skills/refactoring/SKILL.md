@@ -39,6 +39,19 @@ Having a working baseline before refactoring:
 3. REFACTOR: Improve structure
 4. COMMIT: Save refactored code
 
+## Before You Refactor: Chesterton's Fence
+
+Before changing or removing anything, understand **why it was written that way**. G.K. Chesterton's fence: if you see a fence across a road and don't understand why it's there, don't tear it down — first find out the reason, then decide if it still applies.
+
+Ask before touching the code:
+- What is this code's responsibility? What calls it, what does it call?
+- What are its edge cases and error paths?
+- Are there tests that pin down its expected behaviour?
+- Why might it have been written this way — performance, platform constraint, historical bug, contractual API?
+- Check `git blame`: what was the original context?
+
+If you can't answer these, you're not ready to refactor. Read more context first. Speculative "cleanup" of code you don't understand is how regressions enter the codebase.
+
 ## Priority Classification
 
 | Priority | Action | Examples |
@@ -122,6 +135,7 @@ refactor: rename ambiguous parameter names
 
 ## Refactoring Checklist
 
+- [ ] Understood why the code was written this way before changing it (Chesterton's Fence)
 - [ ] All tests pass without modification
 - [ ] No new public APIs added
 - [ ] Code more readable than before

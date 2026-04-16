@@ -149,6 +149,28 @@ Flag steps by type:
 
 ---
 
+## Sequencing: Tackle the Riskiest Slice First
+
+Once steps are sized, decide their *order*. The default is risk-first — surface unknowns and infrastructure risk before investing in the slices that depend on them.
+
+```
+Slice 1: Prove the WebSocket connection works (highest risk)
+Slice 2: Build real-time updates on the proven connection
+Slice 3: Add offline support and reconnection
+```
+
+If Slice 1 fails or the approach changes, you discover it before sinking effort into Slices 2 and 3. This is "fail fast" applied to slice *ordering*, not just to step *sizing*.
+
+**When to break the risk-first default:**
+
+- The riskiest slice has a hard upstream dependency (do that first instead)
+- A small happy-path slice unlocks user feedback that would change everything else (do that first instead)
+- The team needs an early visible win for stakeholder confidence (a negotiated trade-off — name it explicitly)
+
+Otherwise: riskiest first, every time.
+
+---
+
 ## Quick Reference: Risky Changes → Expand-Contract Pattern
 
 Use this table to quickly identify risky changes and apply the correct pattern.
@@ -255,6 +277,25 @@ Watch for these signs:
 - ❌ "We need to coordinate with X team first"
 
 **When you spot these, force more slicing.**
+
+---
+
+## Scope Discipline: Noticed But Not Touching
+
+Every commit is working, deployable software — not "complete" in the abstract, but releasable as-is. This is the XP and Agile Manifesto baseline: the system stays shippable at every step, never "shippable once the next two land." Scope discipline is what protects that property.
+
+Inside a step, touch *only* what the step requires. Adjacent improvements you spot along the way — unused imports, stale comments, "while I'm here" refactors — break the "one thing per step" contract, inflate the diff, and risk pushing the commit out of "releasable."
+
+When you spot something worth fixing outside the current step's scope, **don't fix it**. Capture it as a future step:
+
+```
+NOTICED BUT NOT TOUCHING:
+- src/utils/format.ts has an unused import (unrelated to this slice)
+- The auth middleware error messages could be clearer (separate task)
+→ Want me to add these as follow-up steps?
+```
+
+This keeps each commit honest about its scope, makes review fast, makes revert safe, and preserves the working-software-per-commit guarantee. The fix doesn't disappear — it just gets its own correctly-sized step.
 
 ---
 
