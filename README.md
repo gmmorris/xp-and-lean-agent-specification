@@ -56,6 +56,26 @@ Modular, loadable guidelines that agents pull in based on context. Each skill li
 
 Skills are loaded on demand — agents pick them up based on what they're doing (writing code, reviewing a PR, planning work).
 
+### Commands
+
+Slash commands that orchestrate skills into workflows. Live in `.claude/commands/`.
+
+| Command | What it does |
+|---------|-------------|
+| `/spec` | Write a structured specification before coding — surfaces assumptions, defines success criteria |
+| `/plan` | Break approved requirements into dependency-ordered, verifiable tasks |
+| `/build` | Implement the next task: RED-GREEN-REFACTOR, verify, self-review, commit |
+
+### Sub-Agent Personas
+
+Optional agent personas for specialised review. Live in `agents/`.
+
+| Agent | Role |
+|-------|------|
+| `test-engineer` | Test strategy, coverage analysis, test quality evaluation |
+| `security-auditor` | Vulnerability detection, threat analysis, hardening recommendations |
+| `code-reviewer` | Thorough code review across correctness, design, testability, security, readability |
+
 ## Setup
 
 Symlink from this repo into your agent config directories. This keeps everything in one place — changes to the repo are picked up immediately.
@@ -85,6 +105,6 @@ This specification is adapted from [Paul Hummond's .dotfiles](https://github.com
 
 The following skills are adapted from [Lada Kesseler's Skill Factory](https://github.com/lada-k/skill-factory) (Apache License 2.0): `mutation-testing`, `test-desiderata`, `story-splitting`, `hamburger-method`, `small-safe-steps`, and `complexity-review`. The Hamburger Method is by Gojko Adzic. The Small Safe Steps expand-contract pattern and the 30 Complexity Dimensions are by Eduardo Ferro. See NOTICE for full copyright details.
 
-The following are adapted from [Addy Osmani's agent-skills](https://github.com/addyosmani/agent-skills) (MIT License): nuggets merged into existing skills (test-double hierarchy and Test Pyramid in `testing`, the Prove-It Pattern in `tdd`, Chesterton's Fence in `refactoring`, Change Sizing & Splitting/Change Descriptions/Verification Story in `code-review`, dependency graph and parallelisation matrix in `planning`, Risk-First Sequencing and NOTICED-BUT-NOT-TOUCHING in `small-safe-steps`), skill-local reference checklists (security, performance, accessibility, testing patterns), and seven new skills adapted to XP/Lean voice (`debugging-and-error-recovery`, `deprecation-and-migration`, `source-driven-development`, `code-simplification`, `documentation-and-adrs`, `api-and-interface-design`, `security-and-hardening`).
+The following are adapted from [Addy Osmani's agent-skills](https://github.com/addyosmani/agent-skills) (MIT License): nuggets merged into existing skills (test-double hierarchy and Test Pyramid in `testing`, the Prove-It Pattern in `tdd`, Chesterton's Fence in `refactoring`, Change Sizing & Splitting/Change Descriptions/Verification Story in `code-review`, dependency graph and parallelisation matrix in `planning`, Risk-First Sequencing and NOTICED-BUT-NOT-TOUCHING in `small-safe-steps`), skill-local reference checklists (security, performance, accessibility, testing patterns), seven new skills adapted to XP/Lean voice (`debugging-and-error-recovery`, `deprecation-and-migration`, `source-driven-development`, `code-simplification`, `documentation-and-adrs`, `api-and-interface-design`, `security-and-hardening`), three commands (`/spec`, `/plan`, `/build`), and three sub-agent personas (`test-engineer`, `security-auditor`, `code-reviewer`).
 
 Thank you to Paul, Andrea, Lada, Gojko, Eduardo, and Addy for creating and sharing these excellent practices.
