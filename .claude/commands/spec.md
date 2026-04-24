@@ -5,6 +5,7 @@ description: Write a structured specification before writing code
 Load the `planning` skill and the `expectations` skill.
 
 If the work involves APIs or public interfaces, also load `api-and-interface-design`.
+If the work involves an unfamiliar domain or complex business rules, also load `domain-modeling`.
 If security is a primary concern, also load `security-and-hardening`.
 
 You are starting the **specification phase** — defining what we're building before any code gets written.

@@ -6,7 +6,13 @@ Load the `tdd`, `testing`, and `refactoring` skills.
 
 You are starting the **implementation phase** — building the next task from the plan.
 
-## For Each Task
+## Critically Important
+
+1. Follow all our testing best practices.
+2. Lay out our implementation as a detailed step by step - the aim being that each step is a small vertical slice of the implementation, representing a clean commit point where the software is in working state, and has all the necessary tests (unit -> e2e) because - of course- you have followed our TDD rules
+3. Never commit without my approval - always ask, and when you do commit, use `git duet-commit` to ensure all collaborators are properly attributed in the commit history. 
+
+## For Each Step
 
 1. **Read** the task's acceptance criteria from the plan
 2. **Load context** — existing code, patterns, types relevant to this task

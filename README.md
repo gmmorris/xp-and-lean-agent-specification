@@ -50,6 +50,7 @@ Modular, loadable guidelines that agents pull in based on context. Each skill li
 | `code-simplification` | Clarity-focused refactoring: reduce complexity while preserving behavior |
 | `documentation-and-adrs` | Architecture Decision Records and intent-capturing documentation |
 | `api-and-interface-design` | Stable APIs guided by Hyrum's Law and contract-first design |
+| `domain-modeling` | Lean domain modeling using DDD techniques for shared language, bounded contexts, and aggregate design |
 | `security-and-hardening` | Security-first development with three-tier boundary system |
 | `typescript-strict` | TypeScript strict mode patterns, schema-first design, immutability |
 | `go` | Go patterns with teaching guidance for engineers coming from Rust/Java/Kotlin |

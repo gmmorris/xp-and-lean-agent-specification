@@ -77,6 +77,7 @@ This AGENTS.md provides the framework. Skills contain the detailed guidance. Loa
 | `code-simplification` | Clarity-focused refactoring | Simplifying working code |
 | `documentation-and-adrs` | ADRs and intent-capturing docs | Making architectural decisions |
 | `api-and-interface-design` | Hyrum's Law, contract-first design | Designing APIs or interfaces |
+| `domain-driven-design` | Strategic and tactical DDD patterns | Defining system boundaries and shared language |
 | `security-and-hardening` | Three-tier boundary, OWASP prevention | Handling input, auth, secrets |
 
 ## Visual Skill Indicators
