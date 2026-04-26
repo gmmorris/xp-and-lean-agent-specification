@@ -63,9 +63,17 @@ Slash commands that orchestrate skills into workflows. Live in `.claude/commands
 
 | Command | What it does |
 |---------|-------------|
-| `/spec` | Write a structured specification before coding — surfaces assumptions, defines success criteria |
-| `/plan` | Break approved requirements into dependency-ordered, verifiable tasks |
+| `/discover` | Discover what to build — problem, users, domain language, success criteria |
+| `/plan` | Break discovery into epics and tasks with dependency ordering |
 | `/build` | Implement the next task: RED-GREEN-REFACTOR, verify, self-review, commit |
+
+The intended workflow is **discover → plan → build**:
+
+1. **`/discover`** — Start here. Work out *what* the system should do from a product perspective. What problem are we solving? For whom? What does success look like? Establish the domain language — name the key concepts, entities, and relationships. This surfaces assumptions, edge cases, and constraints before any implementation thinking.
+2. **`/plan`** — Once the discovery is agreed, break the work into epics (coherent slices of domain value) and then tasks within each epic. Domain boundaries guide the slicing — aggregates and bounded contexts are natural epic boundaries.
+3. **`/build`** — Pick up the next task and deliver it: write a failing test, make it pass, refactor, self-review, commit. Repeat until the epic is done.
+
+This keeps work flowing in small, lean, valuable increments — each level works at the right abstraction, with domain thinking threaded throughout.
 
 ### Sub-Agent Personas
 
@@ -88,6 +96,8 @@ cd xp-and-lean-agent-specification
 # For Claude Code
 ln -sf "$PWD/AGENTS.md" ~/.claude/CLAUDE.md
 ln -sf "$PWD/skills" ~/.claude/skills
+ln -sf "$PWD/commands" ~/.claude/commands
+ln -sf "$PWD/agents" ~/.claude/agents
 
 # For OpenCode or shared agent config
 ln -sf "$PWD/AGENTS.md" ~/.config/opencode/AGENTS.md
@@ -98,7 +108,7 @@ ln -sf "$PWD/AGENTS.md" ~/.gemini/GEMINI.md
 ln -sf "$PWD/skills" ~/.gemini/skills
 ```
 
-Adapt paths to your setup. The key requirement is that `AGENTS.md` can reference the skills directory.
+Adapt paths to your setup. The key requirement is that `AGENTS.md` can reference the skills directory. The `commands` symlink gives you `/discover`, `/plan`, and `/build` slash commands; the `agents` symlink enables the `test-engineer`, `security-auditor`, and `code-reviewer` sub-agents.
 
 ## Attribution
 
