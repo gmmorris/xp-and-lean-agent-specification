@@ -60,7 +60,6 @@ This AGENTS.md provides the framework. Skills contain the detailed guidance. Loa
 | `typescript-strict` | TypeScript strict mode patterns | Writing TypeScript |
 | `go` | Go patterns and teaching guidance | Writing Go |
 | `rust` | Rust patterns for web services and systems | Writing Rust |
-| `rust-bootstrap` | Bootstrap new Rust project via interview | Creating a new Rust project |
 | `planning` | User stories, analysis, small increments | Starting significant work |
 | `expectations` | Working practices, code quality principles | Understanding how we work |
 | `test-design-reviewer` | Dave Farley's 8 test quality properties | Reviewing test quality |
@@ -79,6 +78,7 @@ This AGENTS.md provides the framework. Skills contain the detailed guidance. Loa
 | `api-and-interface-design` | Hyrum's Law, contract-first design | Designing APIs or interfaces |
 | `domain-driven-design` | Strategic and tactical DDD patterns | Defining system boundaries and shared language |
 | `security-and-hardening` | Three-tier boundary, OWASP prevention | Handling input, auth, secrets |
+| `observability` | Spans, safe fields, error severity, span-based tests | Adding tracing, logging or metrics |
 
 ## Visual Skill Indicators
 
@@ -122,6 +122,18 @@ Each skill defines `allowed-tools` in its frontmatter. Respect the constraint â€
 
 **How:** Load the `test-driven-development` skill when starting any coding work. It contains workflow, examples, common pitfalls, RED-GREEN-REFACTOR cycle details, and recovery strategies.
 
+### Never Bypass the Checks
+
+**Pre-commit hooks, linters and CI checks are the team's safety net. Never bypass them.** `--no-verify` is not allowed.
+
+**Why this matters:** A check that can be skipped under pressure gives no confidence. Every bypass teaches the team that the checks are optional, and the next failure gets ignored too.
+
+**When a check fails:**
+- Read the error output carefully
+- Fix the root cause. Do not suppress the warning, skip the test, or loosen the rule
+- Run the failing check by hand to confirm the fix before you commit again
+- If the check itself is wrong, say so and propose a change to it. Do not work around it
+
 ### Working with Uncertainty
 
 Don't guess or make assumptions:
@@ -149,7 +161,15 @@ Load the `expectations` skill for detailed problem-solving approaches.
 
 **Surface trade-offs explicitly.** Explain reasoning and alternatives considered.
 
-Load the `expectations` skill for documentation frameworks and formats.
+#### Writing Style
+
+All writing, including comments, documentation and commit messages, follows [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/): short sentences, one instruction per sentence, active voice, and one meaning per word.
+
+**A comment earns its place only when it says what the code cannot:** a hazard, an invariant, or a reason.
+- Don't restate a name, a requirement or a signature. Test cases and type signatures express these better
+- Put design rationale in an ADR, not in the files it describes
+
+Load the `expectations` skill for documentation frameworks and formats, and `documentation-and-adrs` for ADRs.
 
 ## Decision-Making Framework
 
