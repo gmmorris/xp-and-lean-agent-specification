@@ -52,7 +52,6 @@ Modular, loadable guidelines that agents pull in based on context. Each skill li
 | `security-and-hardening` | Security-first development with three-tier boundary system |
 | `observability` | Spans with opt-in fields, no personal data, error severity, span-based tests |
 | `typescript-strict` | TypeScript strict mode patterns, schema-first design, immutability |
-| `go` | Go patterns with teaching guidance for engineers coming from Rust/Java/Kotlin |
 | `rust` | Rust patterns for web services: functional core, type-driven correctness, framework boundaries, error handling |
 | `grill-me` | Interview you relentlessly about a plan or design until every branch of the decision tree is resolved |
 

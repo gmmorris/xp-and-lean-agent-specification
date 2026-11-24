@@ -58,7 +58,6 @@ This AGENTS.md provides the framework. Skills contain the detailed guidance. Loa
 | `testing` | Test patterns, factories, antipatterns | Starting any code work |
 | `refactoring` | Safe refactoring methodology | Starting any code work |
 | `typescript-strict` | TypeScript strict mode patterns | Writing TypeScript |
-| `go` | Go patterns and teaching guidance | Writing Go |
 | `rust` | Rust patterns for web services and systems | Writing Rust |
 | `planning` | User stories, analysis, small increments | Starting significant work |
 | `expectations` | Working practices, code quality principles | Understanding how we work |
