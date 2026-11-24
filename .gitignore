@@ -1,2 +1,4 @@
 .DS_Store
 .claude
+# Synced from claude.ai into ~/.claude/skills (symlinked here); not part of the spec
+skills/synced/
