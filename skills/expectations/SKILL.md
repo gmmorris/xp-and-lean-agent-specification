@@ -86,7 +86,7 @@ STARTER_CHARACTER = 📐
 - No data mutation - immutable data structures only
 - Pure functions wherever possible
 - No nested if/else - use early returns or composition
-- Avoid comments - code should be self-documenting through clear naming
+- Self-documenting code through clear naming - comment only a hazard, an invariant, or a reason (see `documentation-and-adrs`)
 - Prefer options objects over positional parameters
 - Use array methods (`map`, `filter`, `reduce`) over loops
 

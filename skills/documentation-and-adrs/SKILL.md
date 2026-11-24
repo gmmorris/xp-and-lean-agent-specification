@@ -93,6 +93,15 @@ PROPOSED → ACCEPTED → (SUPERSEDED or DEPRECATED)
 
 ### Comment the "Why", Not the "What"
 
+**A comment earns its place only when it says what the code cannot:**
+- **A hazard** — something that breaks if a reader changes it without knowing (`// Postgres DETAIL echoes bind values; sanitise before logging`)
+- **An invariant** — a rule the types cannot enforce (`// Always sorted by created_at; binary search below depends on it`)
+- **A reason** — why this approach, when the obvious one looks better (the sliding-window example below)
+
+Everything else has a better home:
+- A name, a requirement or a signature → the code, the test names and the types already say it
+- Design rationale that spans files → an ADR, linked from the code if needed
+
 ```typescript
 // BAD: Restates the code
 // Increment counter by 1
