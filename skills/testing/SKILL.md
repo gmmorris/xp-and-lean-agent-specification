@@ -54,6 +54,13 @@ Small tests should dominate your suite — they're fast, reliable, and easy to d
 - Crosses a boundary (API, DB, file system)? → Integration (medium)
 - Critical user flow end-to-end? → E2E (large) — limit these to critical paths
 
+### Don't Duplicate Cases Across Layers
+
+Test each case at the lowest layer that can prove it, and at that layer only. A case tested at two layers costs twice to run and twice to change, and gives no extra confidence.
+
+- Every branch of a validation rule → unit tests. The integration test proves that the route returns the error, once.
+- An E2E test proves the real system works end to end. Write one representative test per distinct outcome, not one per input.
+
 ---
 
 ## Test Naming
@@ -491,6 +498,48 @@ The rule of thumb: **if understanding the fixture requires knowing how the forma
 
 ---
 
+## E2E Tests: Parallel and Self-Contained
+
+E2E tests are the slowest tests in the suite. Run them in parallel, against one shared server and one shared database. This only works when each test is self-contained.
+
+### Seed and Read Through the API
+
+Create E2E test data through the public API, as a real client does. Read the results through the API too.
+
+- A test that seeds through the API also tests the API
+- The test stays valid when the stored form changes, because it never depends on table layout
+
+Write SQL only when one of these is true, and say which in a comment:
+- The database is what the test is about: a constraint, a cascade, a migration or a transaction
+- No endpoint can set the data: for example, a back-dated timestamp or a soft-deleted record
+
+### Own What You Assert On
+
+All tests run at the same time against the same data. A test can only trust data that nothing else touches.
+
+- **Each test creates its own records and asserts only on those.** A count or an ordering over a whole table changes whenever another test adds a row.
+- **Shared data is read-only.** Reference data that every test reads is set up once per run. No test changes it, because a change made while another test reads it makes that test fail at random.
+- **A test that must change shared data gets its own copy:** records with unique keys, or a database of its own.
+
+❌ **WRONG — asserts on the whole table:**
+```typescript
+await api.createTask({ title: 'Write the report' });
+const tasks = await api.listTasks();
+expect(tasks).toHaveLength(1); // fails when another test creates a task
+```
+
+✅ **CORRECT — creates its own project and asserts only on it:**
+```typescript
+const project = await api.createProject({ name: uniqueName('project') });
+await api.createTask({ projectId: project.id, title: 'Write the report' });
+const tasks = await api.listTasks({ projectId: project.id });
+expect(tasks.map((t) => t.title)).toEqual(['Write the report']);
+```
+
+**Don't serialise tests to hide shared state.** A lock or a "run serially" flag slows the whole suite, and leaves the sharing in place for the next test to trip over. Remove the sharing instead.
+
+---
+
 ## Coverage Theater Detection
 
 Watch for these patterns that give fake 100% coverage:
@@ -643,3 +692,6 @@ When writing tests, verify:
 - [ ] Edge cases covered (not just happy path)
 - [ ] Tests would pass even if implementation is refactored
 - [ ] No 1:1 mapping between test files and implementation files
+- [ ] Each case is tested at one layer only — no duplicates across unit, integration and E2E
+- [ ] E2E tests seed and read through the API; any SQL says why in a comment
+- [ ] E2E tests create their own records, assert only on those, and run in parallel
