@@ -229,6 +229,7 @@ src/
 - Binary modules import from `lib.rs` via the crate name (`use my_crate::domain::...`)
 - Domain types live in `lib.rs`; HTTP request/response shapes live in handlers
 - No `util`, `common`, or `helpers` modules — organise by domain
+- **`mod.rs` holds module declarations and re-exports only.** Put each type, its implementation and its tests in a file of their own (`order.rs`, `validation.rs`, `repository.rs`). This keeps `mod.rs` easy to scan and each file about one concept
 
 ---
 
@@ -256,6 +257,29 @@ assert_eq!(validate(&input), Err(ValidationError::MismatchedBaseNames));
 ```
 
 Handlers map domain errors to responses — they do not bubble `?` to a generic error handler.
+
+### No `anyhow` in domain code
+
+`anyhow::Error` erases the error type, so a test can only compare strings. Keep `anyhow` out of domain code. Use `thiserror` to derive `Display` and `From` on domain enums; the enums still derive `PartialEq`, so tests can compare them directly. `anyhow` is acceptable in `main.rs`, build scripts and tooling, where no test matches on the error.
+
+### Never swallow the source error
+
+Mapping to a coarser error is fine. Throwing away the reason is not. `.map_err(|_| ...)` discards the diagnostic that tells an operator *why* it failed. Record the source first, then map:
+
+❌ **WRONG — the cause is lost:**
+```rust
+Code::try_parse(&raw).map_err(|_| RepoError::InvalidCode)
+```
+
+✅ **CORRECT — the cause lands on the current span; callers still get a coarse variant:**
+```rust
+Code::try_parse(&raw).map_err(|err| {
+    tracing::error!(error = ?err, db_value = %raw, "row with unparseable code");
+    RepoError::InvalidCode
+})
+```
+
+Search for the anti-pattern before adding new mappings: `rg 'map_err\(\|_\|'`. Load the `observability` skill for how to record errors without leaking personal data.
 
 ---
 
@@ -345,6 +369,9 @@ Prefer external crates over reimplementing established domain knowledge — bina
 - ❌ **`util` or `helpers` modules** — organise by domain, not by technical role
 - ❌ **Hard-coding an enum variant that describes variable data** — derive discriminators from the data via exhaustive match
 - ❌ **Passing a broad enum directly when the value must come from a derivation step** — consider a newtype to carry proof of derivation
+- ❌ **Types, implementations or tests in `mod.rs`** — it declares and re-exports modules only
+- ❌ **`anyhow` in domain code** — type erasure leaves tests comparing strings
+- ❌ **`.map_err(|_| ...)`** — record the source error before mapping it to a coarser variant
 
 ---
 
@@ -362,3 +389,6 @@ When generating Rust code, verify:
 - [ ] `#[cfg(test)]` modules are inline, not in separate test files
 - [ ] Enum variants passed to external APIs are derived from data, not hard-coded
 - [ ] Types that carry proof of derivation (newtypes) are used where a mismatch has caused bugs
+- [ ] `mod.rs` files contain only module declarations and re-exports
+- [ ] No `anyhow` in domain code; domain errors use `thiserror` where `Display`/`From` help
+- [ ] Every `map_err` that coarsens an error records the source first
